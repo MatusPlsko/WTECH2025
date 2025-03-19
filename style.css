@@ -1,0 +1,33 @@
+
+
+
+#main{
+    font-family: "Monospaced", monospace;
+    font-size: 2rem;
+}
+
+#shop_btn{
+    max-width: 80%;
+}
+
+#account_btn{
+    max-width: 80%;
+}
+
+.navbar-bottom {
+    background-color: #283618;
+    color: #fefae0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+}
+
+.navbar-bottom .navbar-nav .nav-item {
+    margin: 0 10rem;
+
+}
+
+.navbar-toggler {
+    margin-left: auto;
+}
