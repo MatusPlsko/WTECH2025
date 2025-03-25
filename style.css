@@ -50,10 +50,5 @@
 
 .slide-background {
     background-color: #333; /* Tu si uprav farbu pozadia */
-    height: 550px;
-}
-
-.slide-image {
-    max-height: 500px;
-    object-fit: contain;
+    height: 60vh;
 }

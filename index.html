@@ -21,12 +21,12 @@
             </form>
         </div>
         <div class="d-flex align-items-center gap-2">
-        <button class="btn p-0 border-10">
-            <img id="account_btn" src="images/account.png" alt="ikona" class="img-fluid">
-        </button>
-        <button class="btn p-0 border-10">
-            <img id="shop_btn" src="images/shop.png" alt="ikona" class="img-fluid">
-        </button>
+            <button class="btn p-0 border-10">
+                <img id="account_btn" src="images/account.png" alt="ikona" class="img-fluid">
+            </button>
+            <button class="btn p-0 border-10">
+                <img id="shop_btn" src="images/shop.png" alt="ikona" class="img-fluid">
+            </button>
         </div>
     </div>
 </nav>
@@ -61,6 +61,7 @@
         </div>
     </div>
 </nav>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -70,17 +71,39 @@
     <div class="carousel-inner">
         <div class="carousel-item active slide-background">
             <div class="d-flex justify-content-center align-items-center h-100">
-                <img src="images/banner1.avif" class="img-fluid slide-image" alt="First slide">
+                <div class="text text-white" style="flex: 1;">
+                    <h2>First Slide Title</h2>
+                    <p>Some text description for the first slide. This text can be detailed and will appear alongside the image.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+                <div class="text-center" style="flex: 1;">
+                    <img src="images/banner1.avif" alt="Image" class="img-fluid" style="width: 50vh; height: 50vh; object-fit: cover; border-radius: 50%;">
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item slide-background">
+            <div class="d-flex justify-content-between align-items-center h-100">
+                <div class="text-left text-white" style="flex: 1;">
+                    <h2>Second Slide Title</h2>
+                    <p>Another description for the second slide. Here's more information about this slide content.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+                <div class="text-end" style="flex: 1;">
+                    <img src="images/banner1.avif" alt="Image" class="img-fluid rounded-circle" style="width: 20vw; height: 20vw; object-fit: cover;">
+                </div>
             </div>
         </div>
         <div class="carousel-item slide-background">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <img src="images/banner1.avif" class="img-fluid slide-image" alt="Second slide">
-            </div>
-        </div>
-        <div class="carousel-item slide-background">
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <img src="images/banner1.avif" class="img-fluid slide-image" alt="Third slide">
+            <div class="d-flex justify-content-between align-items-center h-100">
+                <div class="text-left text-white" style="flex: 1;">
+                    <h2>Third Slide Title</h2>
+                    <p>Some description for the third slide. Add more details or a call to action here.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+                <div class="text-end" style="flex: 1;">
+                    <img src="images/banner1.avif" alt="Image" class="img-fluid rounded-circle" style="width: 20vw; height: 20vw; object-fit: cover;">
+                </div>
             </div>
         </div>
     </div>
@@ -94,8 +117,6 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
-
 
 </body>
 </html>
