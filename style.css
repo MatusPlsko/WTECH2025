@@ -16,18 +16,44 @@
 
 .navbar-bottom {
     background-color: #283618;
-    color: #fefae0;
     display: flex;
     justify-content: center;
     width: 100%;
     padding: 0;
 }
 
+.navbar-upper
+{
+    background-color: #606C38;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .navbar-bottom .navbar-nav .nav-item {
     margin: 0 10rem;
 
 }
+.navbar-bottom .navbar-nav .nav-item .nav-link {
+    color: #fefae0 !important;
+    font-weight: bold;
+}
+
+.navbar-bottom .navbar-nav .nav-item .nav-link:hover {
+    color: #dda15e !important;
+    font-weight: bold;
+}
 
 .navbar-toggler {
     margin-left: auto;
+}
+
+.slide-background {
+    background-color: #333; /* Tu si uprav farbu pozadia */
+    height: 550px;
+}
+
+.slide-image {
+    max-height: 500px;
+    object-fit: contain;
 }
