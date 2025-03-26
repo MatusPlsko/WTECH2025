@@ -1,4 +1,26 @@
 
+:root {
+    --primary-color: #3a5a40;
+    --secondary-color: #588157;
+    --third-color: #607d5b;
+    --third-color-hover: ;
+    --fourth-color: #729b6b;
+    --fourth-color-hover: ;
+    --fifth-color: #84b87b;
+    --carousel-bckg: #344e41;
+    --accent-color: #dad7cd;
+    --text-color: #f5f5f5;
+    --text-color-hover: #dda15e;
+    --hover-color: #a3b18a;
+    --button-bg: #3a5a40;
+    --button-hover-bg: #344e41;
+    --footer-bg: #588157;
+    --footer-text: #fefae0;
+    --btn-hover: #0056b3;
+}
+
+
+
 
 
 #main{
@@ -15,7 +37,7 @@
 }
 
 .navbar-bottom {
-    background-color: #283618;
+    background-color: var(--secondary-color);
     display: flex;
     justify-content: center;
     width: 100%;
@@ -24,7 +46,8 @@
 
 .navbar-upper
 {
-    background-color: #606C38;
+
+    background-color: var(--primary-color);
     display: flex;
     justify-content: center;
     width: 100%;
@@ -35,12 +58,12 @@
 
 }
 .navbar-bottom .navbar-nav .nav-item .nav-link {
-    color: #fefae0 !important;
+    color: var(--text-color);
     font-weight: bold;
 }
 
 .navbar-bottom .navbar-nav .nav-item .nav-link:hover {
-    color: #dda15e !important;
+    color: var(--text-color-hover);
     font-weight: bold;
 }
 
@@ -49,7 +72,7 @@
 }
 
 .slide-background {
-    background-color: #333; /* Tu si uprav farbu pozadia */
+    background-color: var(--third-color); /* Tu si uprav farbu pozadia */
     height: 60vh;
 }
 .slide-background .text-left {
@@ -72,8 +95,8 @@
 }
 
 .grid-btn {
-    background-color: #0f3d3e; /* Tmavozelená farba (uprav podľa potreby) */
-    color: #f5f5f5; /* Svetlá farba textu */
+    background-color: var(--primary-color); /* Tmavozelená farba (uprav podľa potreby) */
+    color: var(--text-color); /* Svetlá farba textu */
     font-weight: bold;
     font-size: 18px;
     padding: 15px 30px;
@@ -85,21 +108,13 @@
 }
 
 .grid-btn:hover {
-    background-color: #0c2e2f; /* Tmavší odtieň na hover */
+    background-color: var(--third-color); /* Tmavší odtieň na hover */
     transform: scale(1.05); /* Jemné zväčšenie */
 }
 .recommended-section {
     text-align: center;
     padding: 5vh 5vw;
-    background-color: #f5f5f5;
-    margin-bottom: 0; /* Zrušenie spodného okraja */
-}
-
-.footer {
-    background-color: #606C38;
-    color: #fefae0;
-    padding: 2vh;
-    margin-top: 0; /* Zrušenie horného okraja */
+    background-color: var(--fourth-color);
 }
 
 .recommended-section h2 {
@@ -116,7 +131,7 @@
 
 .card {
     width: 100%;
-    background: white;
+    background: var(--fifth-color);
     padding: 1.5vh;
     border-radius: 1.5vh;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -144,7 +159,7 @@
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     padding: 1vh 2vw;
     border-radius: 1vh;
@@ -156,13 +171,15 @@
 .btn-primary:hover {
     background-color: #0056b3;
 }
-
-
 .footer {
-    background-color: #606C38;
+    background-color: var(--primary-color);
     color: #fefae0;
-    padding: 2vh;
-    margin-top: 0; /* Zrušenie horného okraja */
+    padding: 1vh;
+}
+
+.footer a {
+    color: #fefae0;
+    transition: color 0.3s ease;
 }
 
 .footer a:hover {
@@ -177,5 +194,3 @@
 .footer .footer-content a {
     font-weight: bold;
 }
-
-
