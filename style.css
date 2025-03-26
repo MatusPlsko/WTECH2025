@@ -52,3 +52,101 @@
     background-color: #333; /* Tu si uprav farbu pozadia */
     height: 60vh;
 }
+.slide-background .text-left {
+    margin-left: 20vw; /* Alebo 20px podľa potreby */
+}
+.img-carousel {
+    width: 50vh;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 2vh; /* Medzera medzi buttonmi */
+    flex-wrap: wrap; /* Ak sa nezmestia, pôjdu do ďalšieho riadku */
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.grid-btn {
+    background-color: #0f3d3e; /* Tmavozelená farba (uprav podľa potreby) */
+    color: #f5f5f5; /* Svetlá farba textu */
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px 30px;
+    border-radius: 15px; /* Zaoblené rohy */
+    border: none;
+    transition: all 0.3s ease;
+    min-width: 180px; /* Pevná šírka buttonu */
+    text-align: center;
+}
+
+.grid-btn:hover {
+    background-color: #0c2e2f; /* Tmavší odtieň na hover */
+    transform: scale(1.05); /* Jemné zväčšenie */
+}
+.recommended-section {
+    text-align: center;
+    padding: 5vh 5vw;
+    background-color: #f5f5f5;
+}
+
+.recommended-section h2 {
+    font-size: 2.5vh;
+    margin-bottom: 3vh;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 stĺpce */
+    gap: 2vw;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    background: white;
+    padding: 1.5vh;
+    border-radius: 1.5vh;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 1vh;
+}
+
+.card-body {
+    padding: 1vh 0;
+}
+
+.card-title {
+    font-size: 1.8vh;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1.5vh;
+    color: #555;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 1vh 2vw;
+    border-radius: 1vh;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1vh;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
