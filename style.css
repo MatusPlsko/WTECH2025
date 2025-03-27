@@ -209,3 +209,56 @@
 .footer .footer-content a {
     font-weight: bold;
 }
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
+.product-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.summary-box {
+    padding: 20px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 10px;
+}
+
+.summary-box h3 {
+    font-size: 1.5rem;
+}
+
+.summary-box p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.discount-input,
+.checkout-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.checkout-btn {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
