@@ -30,7 +30,7 @@
 
 }
 #main{
-    font-family: "Monospaced", monospace;
+
     font-size: 2rem;
 }
 
@@ -60,7 +60,8 @@
 }
 
 .navbar-bottom .navbar-nav .nav-item {
-    margin: 0 10rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
 
 }
 .navbar-bottom .navbar-nav .nav-item .nav-link {
@@ -90,6 +91,11 @@
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 50%;
+}
+@media screen and (max-width: 768px) {
+    .img-carousel {
+        width: 20vh;
+    }
 }
 .container {
     display: flex;
@@ -124,8 +130,9 @@
 }
 
 .recommended-section h2 {
-    font-size: 2.5vh;
+    font-size: 3vh;
     margin-bottom: 3vh;
+    color: var(--text-color);
 }
 
 .product-grid {
