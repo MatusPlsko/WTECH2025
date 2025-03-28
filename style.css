@@ -41,6 +41,10 @@
     max-width: 80%;
 }
 
+.about-page .bi {
+    color: var(--third-color);
+}
+
 .navbar-bottom {
     background-color: var(--secondary-color);
     display: flex;
@@ -92,9 +96,12 @@
     object-fit: cover;
     border-radius: 50%;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
     .img-carousel {
         width: 20vh;
+    }
+    #main{
+        font-size: 1rem;
     }
 }
 .container {
@@ -198,6 +205,12 @@
     color: #fefae0;
     padding: 1vh;
 }
+.btn-outline-secondary{
+    border-color: var(--third-color);
+    color: var(--third-color);
+}
+
+
 
 .footer a {
     color: #fefae0;
@@ -611,4 +624,12 @@ main.container {
 
 .min-height-tab-content {
     min-height: 300px;
+}
+.news-card{
+    background-color: var(--third-color);
+    padding: 1.5vh;
+    border-radius: 1.5vh;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    color: var(--text-color);
 }
