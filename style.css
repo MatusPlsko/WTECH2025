@@ -64,6 +64,7 @@
     margin-right: 5rem;
 
 }
+
 .navbar-bottom .navbar-nav .nav-item .nav-link {
     color: var(--text-color);
     font-weight: bold;
@@ -268,4 +269,7 @@ body {
     padding: 10px;
     border: none;
     border-radius: 5px;
+}
+.about {
+    background-color: var(--third-color);
 }
