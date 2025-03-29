@@ -147,6 +147,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 1rem;
+
 }
 
 .card {
@@ -156,26 +157,33 @@
     border-radius: 1.5vh;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    text-decoration: none;
 }
 
 .card img {
     width: 100%;
     height: auto;
     border-radius: 1vh;
+
 }
 
 .card-body {
     padding: 1vh 0;
+
 }
 
 .card-title {
     font-size: 1.8vh;
     font-weight: bold;
+    text-decoration: none;
+
 }
 
 .card-text {
     font-size: 1.5vh;
     color: #555;
+    text-decoration: none;
+
 }
 
 
