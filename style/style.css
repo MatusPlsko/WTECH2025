@@ -144,7 +144,7 @@
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 1rem;
 }
@@ -332,8 +332,33 @@ body {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.img {
+    max-width: 100%;
+    height: auto;
+
+}
+
+@media (max-width: 992px) {
+    .news-card .d-flex {
+        flex-direction: column;  /* Zmena poradia na vertikálnu (obrázok nad textom) */
+    }
+
+    .news-card img {
+        margin-bottom: 1rem;
+
+
+
+    }
 }
 
 @media screen and (max-width: 1200px) {
@@ -628,6 +653,15 @@ main.container {
     min-height: 300px;
 }
 .news-card{
+    background-color: var(--third-color);
+    padding: 1.5vh;
+    border-radius: 1.5vh;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    color: var(--text-color);
+}
+
+.sale-card{
     background-color: var(--third-color);
     padding: 1.5vh;
     border-radius: 1.5vh;
