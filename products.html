@@ -67,40 +67,92 @@
     </header>
 
     <div class="products-container">
-        <!-- Categories -->
         <div class="categories-sidebar">
-            <h3>Categories</h3>
+            <h3>CATEGORIES</h3>
             <ul class="list-unstyled">
                 <li><a href="#">Proteins</a></li>
                 <li><a href="#">Amino Acids</a></li>
                 <li><a href="#">Creatine</a></li>
-                <li><a href="#">Vitamins</a></li>
                 <li><a href="#">Pre-workout</a></li>
-                <li><a href="#">BCAA</a></li>
-                <li><a href="#">Gainers</a></li>
-                <li><a href="#">Fat Burners</a></li>
+                <li><a href="#">Post-workout</a></li>
+                <li><a href="#">Weight Loss</a></li>
+                <li><a href="#">Vitamins</a></li>
             </ul>
-        </div>
 
-        <!-- Products -->
-        <div class="products-section">
-            <!-- Filter -->
-            <div class="filter-section">
-                <div class="dropdown">
-                    <button class="btn btn-filter dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Filter By
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                        <li><a class="dropdown-item" href="#">Newest First</a></li>
-                        <li><a class="dropdown-item" href="#">Most Popular</a></li>
-                    </ul>
+            <h3 class="mt-4">PRICE RANGE</h3>
+            <div class="px-2">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="small">€0</span>
+                    <span class="small">€100</span>
+                </div>
+                <input type="range" class="form-range mb-3" min="0" max="100" value="100">
+                <div class="d-flex gap-2 mb-3">
+                    <input type="number" class="form-control form-control-sm" placeholder="Min" min="0">
+                    <input type="number" class="form-control form-control-sm" placeholder="Max" min="0">
                 </div>
             </div>
 
+            <h3 class="mt-4">RATING</h3>
+            <ul class="list-unstyled px-2">
+                <li class="mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rating5">
+                        <label class="form-check-label text-white" for="rating5">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </label>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rating4">
+                        <label class="form-check-label text-white" for="rating4">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star text-warning"></i>
+                            & up
+                        </label>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rating3">
+                        <label class="form-check-label text-white" for="rating3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star text-warning"></i>
+                            <i class="bi bi-star text-warning"></i>
+                            & up
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="products-section">
+            <div class="d-flex align-items-center">
+                <h3 class="h3 mb-4 text-secondary fw-bold">     Featured Products</h3>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-filter dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Filter By
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                            <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                            <li><a class="dropdown-item" href="#">Newest First</a></li>
+                            <li><a class="dropdown-item" href="#">Most Popular</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="product-grid">
-                <!-- Product 1 -->
                 <div class="card">
                     <img src="images/product_protein_1.jpg" alt="Product 1">
                     <div class="card-body">
@@ -110,7 +162,6 @@
                     </div>
                 </div>
 
-                <!-- Product 2 -->
                 <div class="card">
                     <img src="images/product_bcaa.jpg" alt="Product 2">
                     <div class="card-body">
@@ -120,7 +171,6 @@
                     </div>
                 </div>
 
-                <!-- Product 3 -->
                 <div class="card">
                     <img src="images/product_creatin.jpg" alt="Product 3">
                     <div class="card-body">
@@ -130,7 +180,6 @@
                     </div>
                 </div>
 
-                <!-- Product 4 -->
                 <div class="card">
                     <img src="images/product_preworkout.jpg" alt="Product 4">
                     <div class="card-body">
@@ -140,7 +189,6 @@
                     </div>
                 </div>
 
-                <!-- Product 5 -->
                 <div class="card">
                     <img src="images/product_gainer.jpg" alt="Product 5">
                     <div class="card-body">
@@ -150,7 +198,6 @@
                     </div>
                 </div>
 
-                <!-- Product 6 -->
                 <div class="card">
                     <img src="images/product_vitamincomplex.jpg" alt="Product 6">
                     <div class="card-body">
@@ -160,7 +207,6 @@
                     </div>
                 </div>
 
-                <!-- Product 7 -->
                 <div class="card">
                     <img src="images/product_proteinbar.jpg" alt="Product 7">
                     <div class="card-body">
@@ -170,7 +216,6 @@
                     </div>
                 </div>
 
-                <!-- Product 8 -->
                 <div class="card">
                     <img src="images/product_omega3.jpg" alt="Product 8">
                     <div class="card-body">
@@ -180,7 +225,6 @@
                     </div>
                 </div>
 
-                <!-- Product 9 -->
                 <div class="card">
                     <img src="images/product_zma.jpg" alt="Product 9">
                     <div class="card-body">
@@ -190,7 +234,6 @@
                     </div>
                 </div>
 
-                <!-- Product 10 -->
                 <div class="card">
                     <img src="images/product_glutamine.jpg" alt="Product 10">
                     <div class="card-body">
@@ -200,7 +243,6 @@
                     </div>
                 </div>
 
-                <!-- Product 11 -->
                 <div class="card">
                     <img src="images/product_massgainer.jpg" alt="Product 11">
                     <div class="card-body">
@@ -210,7 +252,6 @@
                     </div>
                 </div>
 
-                <!-- Product 12 -->
                 <div class="card">
                     <img src="images/product_multivitamin.jpg" alt="Product 12">
                     <div class="card-body">
@@ -221,7 +262,6 @@
                 </div>
             </div>
 
-            <!-- Pagination -->
             <div class="pagination-section">
                 <nav aria-label="Product navigation">
                     <ul class="pagination justify-content-center">
