@@ -27,6 +27,8 @@
     box-sizing: border-box;
 
 
+
+
 }
 #main{
 
@@ -44,7 +46,7 @@
 .about-page .bi {
     color: var(--third-color);
 }
-
+/* Index */
 .navbar-bottom {
     background-color: var(--secondary-color);
     display: flex;
@@ -83,11 +85,11 @@
 }
 
 .slide-background {
-    background-color: var(--third-color); /* Tu si uprav farbu pozadia */
+    background-color: var(--third-color);
     height: 60vh;
 }
 .slide-background .text-left {
-    margin-left: 20vw; /* Alebo 20px podľa potreby */
+    margin-left: 20vw;
 }
 .img-carousel {
     width: 50vh;
@@ -107,28 +109,28 @@
 .container {
     display: flex;
     justify-content: center;
-    gap: 2vh; /* Medzera medzi buttonmi */
-    flex-wrap: wrap; /* Ak sa nezmestia, pôjdu do ďalšieho riadku */
+    gap: 2vh;
+    flex-wrap: wrap;
     margin-top: 5vh;
     margin-bottom: 5vh;
 }
 
 .grid-btn {
-    background-color: var(--primary-color); /* Tmavozelená farba (uprav podľa potreby) */
-    color: var(--text-color); /* Svetlá farba textu */
+    background-color: var(--primary-color);
+    color: var(--text-color);
     font-weight: bold;
     font-size: 18px;
     padding: 15px 30px;
-    border-radius: 15px; /* Zaoblené rohy */
+    border-radius: 15px;
     border: none;
     transition: all 0.3s ease;
-    min-width: 180px; /* Pevná šírka buttonu */
+    min-width: 180px;
     text-align: center;
 }
 
 .grid-btn:hover {
-    background-color: var(--secondary-color); /* Tmavší odtieň na hover */
-    transform: scale(1.05); /* Jemné zväčšenie */
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
 }
 .recommended-section {
     text-align: center;
@@ -261,6 +263,7 @@ body {
     object-fit: cover;
     border-radius: 5px;
 }
+/*Cart*/
 .summary-box {
     padding: 20px;
     background-color: #6c757d;
@@ -333,7 +336,7 @@ body {
     transform: translateX(5px);
 }
 
-/* Upravenie produktového gridu */
+
 .products-section {
     flex-grow: 1;
 }
@@ -355,10 +358,10 @@ body {
     height: auto;
 
 }
-
+/* Responsive */
 @media (max-width: 992px) {
     .news-card .d-flex {
-        flex-direction: column;  /* Zmena poradia na vertikálnu (obrázok nad textom) */
+        flex-direction: column;
     }
 
     .news-card img {
@@ -414,6 +417,10 @@ main.container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 2rem;
+}
+
+.sale-h{
+    color: var(--third-color);
 }
 
 .btn-filter {
