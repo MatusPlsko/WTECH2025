@@ -5,8 +5,10 @@ use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Auth\CustomLoginController;
 
-
+Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
+Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/news', [PageController::class, 'news'])->name('news');

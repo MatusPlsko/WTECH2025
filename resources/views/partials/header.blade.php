@@ -14,21 +14,45 @@
                         <i class="bi bi-person-fill fs-3"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end p-3" style="width: 250px;">
-                        <h5 class="text-center">Login</h5>
-                        <div class="mb-2">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password">
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary" onclick="window.location.href='adminpage.html'">Login</button>
-                            <button class="btn btn-outline-secondary" onclick="window.location.href='{{route('register')}}'">Register</button>
-                        </div>
+                        @auth
+                            <h5 class="text-center">
+                                {{ Auth::user()->first_name }} {{ Auth::user()->last_name}}
+                            </h5>
+
+                            @if(Auth::user()->is_admin)
+                                <div class="d-grid gap-2 my-2">
+                                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">Admin panel</a>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                                </div>
+                            </form>
+                        @else
+                            <h5 class="text-center">Login</h5>
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <div class="mb-2">
+                                    <label for="email" class="form-label">E-mail</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" name="password" required>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                    <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
+                                </div>
+                            </form>
+                        @endauth
                     </div>
                 </div>
+
+
 
                 <button class="btn p-0" onclick="window.location.href='{{ route('cart') }}'">
                     <i class="bi bi-cart fs-3"></i>

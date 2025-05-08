@@ -91,115 +91,36 @@
             </div>
             <div class="product-grid">
 
-                <div class="card">
+                @foreach($products as $p)
+                    <div class="card">
 
-                    <a href="oneproduct.html"><img src="../images/products/product_protein_1.jpg" alt="Product 1"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Whey Protein</h5>
-                            <p class="card-text">39.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
+                            {{-- Image --}}
+                            @if($p->images->first())
+                                <a href="">
+                                    <img src="{{ asset('storage/'.$p->images->first()->path) }}"
+                                         class="card-img-top"
 
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_bcaa.jpg" alt="Product 2"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">BCAA Complex</h5>
-                        <p class="card-text">29.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
+                                         alt="{{ $p->name }}">
+                                </a>
+                            @else
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-image fs-1 text-muted"></i>
+                                </div>
+                            @endif
 
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_creatin.jpg" alt="Product 3"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Creatine Monohydrate</h5>
-                        <p class="card-text">24.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
+                            {{-- Name & Price --}}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $p->name }}</h5>
+                                <p class="card-text">€{{ number_format($p->price, 2) }}</p>
+                            </div>
 
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_preworkout.jpg" alt="Product 4"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Pre-Workout</h5>
-                        <p class="card-text">34.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
+                            {{-- Add to Cart Button --}}
+                        <a href="" class="btn btn-primary">Add to Cart</a>
 
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_gainer.jpg" alt="Product 5"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Gainer</h5>
-                        <p class="card-text">44.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
                     </div>
-                </div>
+                @endforeach
 
-                <div class="card">
-                    <a href="oneproduct.html"> <img src="../images/products/product_vitamincomplex.jpg" alt="Product 6"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Vitamin Complex</h5>
-                        <p class="card-text">19.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
 
-                <div class="card">
-                    <a href="oneproduct.html"> <img src="../images/products/product_proteinbar.jpg" alt="Product 7"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Protein Bar</h5>
-                        <p class="card-text">2.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_omega3.jpg" alt="Product 8"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Omega 3</h5>
-                        <p class="card-text">15.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_zma.jpg" alt="Product 9"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">ZMA</h5>
-                        <p class="card-text">22.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_glutamine.jpg" alt="Product 10"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Glutamine</h5>
-                        <p class="card-text">27.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_massgainer.jpg" alt="Product 11"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Mass Gainer</h5>
-                        <p class="card-text">49.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_multivitamin.jpg" alt="Product 12"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Multivitamin</h5>
-                        <p class="card-text">17.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
 
             <div class="pagination-section">
                 <nav aria-label="Product navigation">

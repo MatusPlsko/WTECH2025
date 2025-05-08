@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -27,7 +27,8 @@ class PageController extends Controller
     }
     public function products()
     {
-        return view('products');
+        $products = Product::with('images')->paginate(12);
+        return view('products', compact('products'));
     }
     public function register()
     {
