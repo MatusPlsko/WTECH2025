@@ -43,6 +43,13 @@ class PageController extends Controller
     }
 
 
+    public function registersuccess()
+    {
+        return view('registersuccess');
+    }
+
+
+
 
 
 
