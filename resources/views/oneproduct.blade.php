@@ -10,12 +10,11 @@
                 <div class="col-md-6">
                     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="../images/products/product_protein_1.jpg" class="d-block w-100" alt="Product Image 1">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="../images/products/product_protein_2.jpg" class="d-block w-100" alt="Product Image 2">
-                            </div>
+                            @foreach($product->images as $index => $image)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $image->path) }}" class="d-block w-100" alt="Product Image {{ $index + 1 }}">
+                                </div>
+                            @endforeach
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -29,8 +28,8 @@
                 <!-- Product Info -->
                 <div class="col-md-6">
                     <div class="product-info">
-                        <h1>Whey Protein Premium</h1>
-                        <div class="price">39.99 €</div>
+                        <h1>{{$product->name}}</h1>
+                        <div class="price">{{$product->price,2}} €</div>
                         <div class="rating mb-3">
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
@@ -40,8 +39,7 @@
                             <span class="ms-2">(4.5/5)</span>
                         </div>
                         <p class="description">
-                            Premium quality whey protein powder with 25g of protein per serving. Perfect for muscle recovery and growth.
-                            Made with high-quality ingredients and great taste.
+                            {{$product->description}}
                         </p>
                         <div class="quantity-selector mb-3">
                             <label for="quantity">Quantity:</label>
@@ -75,13 +73,7 @@
             <div class="tab-content border border-top-0 rounded-bottom p-4" id="productTabsContent">
                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                     <h3>Product Description</h3>
-                    <p>Our premium whey protein powder is designed to help you achieve your fitness goals. Each serving contains 25g of high-quality protein, essential amino acids, and is low in fat and carbs.</p>
-                    <ul>
-                        <li>25g protein per serving</li>
-                        <li>Low in fat and carbs</li>
-                        <li>Great taste</li>
-                        <li>Easy to mix</li>
-                    </ul>
+                    {{$product->description}}
                 </div>
                 <div class="tab-pane fade" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
                     <h3>Ingredients</h3>

@@ -382,12 +382,12 @@ body {
     .products-container {
         flex-direction: column;
     }
-    
+
     .categories-sidebar {
         width: 100%;
         margin-bottom: 1rem;
     }
-    
+
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -400,7 +400,7 @@ body {
 }
 
 main.container {
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 
 .products-container {
@@ -530,6 +530,11 @@ main.container {
     margin-bottom: 3rem;
 }
 
+#productTabsContent {
+    min-width: 70rem;
+    overflow-y: auto;
+}
+
 .product-tabs .nav-tabs {
     border-bottom: 2px solid var(--primary-color);
 }
@@ -649,15 +654,15 @@ main.container {
     .product-info h1 {
         font-size: 2rem;
     }
-    
+
     .product-info .price {
         font-size: 1.5rem;
     }
-    
+
     .product-tabs .nav-tabs .nav-link {
         padding: 0.75rem 1rem;
     }
-    
+
     .carousel-control-prev,
     .carousel-control-next {
         display: none;

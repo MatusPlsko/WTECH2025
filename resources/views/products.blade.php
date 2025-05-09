@@ -96,7 +96,7 @@
                         <div class="card">
                             {{-- Image --}}
                             @if($p->images->first())
-                                <a href="">
+                                <a href="{{route('showProduct', $p->id)}}">
                                     <img src="{{ asset('storage/'.$p->images->first()->path) }}"
                                          class="card-img-top"
                                          alt="{{ $p->name }}">
@@ -113,12 +113,15 @@
                                 <p class="card-text">€{{ number_format($p->price, 2) }}</p>
                             </div>
 
-                            {{-- Add to Cart Button --}}
-                            <a href="" class="btn btn-primary">Add to Cart</a>
+                            <form method="POST" action="{{ route('cart.add', $p->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
+
                         </div>
                     @endforeach
                 @else
-                    <p class="text-center">Žiadne produkty na zobrazenie.</p>
+                    <p class="text-center">No products</p>
                 @endif
             </div>
 

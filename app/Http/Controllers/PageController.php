@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -21,9 +21,10 @@ class PageController extends Controller
     {
         return view('news');
     }
-    public function oneproduct()
+    public function showProduct(Product $product)
     {
-        return view('oneproduct');
+        $product->load('images');
+        return view('oneproduct', compact('product'));
     }
     public function products()
     {
@@ -38,10 +39,15 @@ class PageController extends Controller
     {
         return view('sale');
     }
+
     public function shopping_cart()
     {
-        return view('shopping_cart');
+        $cart = session()->get('cart', []);
+        $user = Auth::user(); // môže byť aj request()->user()
+
+        return view('shopping_cart', compact('cart', 'user'));
     }
+
 
 
     public function registersuccess()

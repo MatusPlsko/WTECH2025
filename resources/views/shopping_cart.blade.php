@@ -1,41 +1,45 @@
 @extends('app')
 @section('content')
+    @php
+        use Illuminate\Support\Facades\Auth;
+        $user = Auth::user();
+        $total = 0;
+    @endphp
 
     <main class="container mt-4">
         <div class="row">
             <div class="col-lg-7">
                 <div class="cart-items">
-                    <div class="cart-item p-3 mb-3 d-flex align-items-center gap-3">
-                        <img src="../images/products/product_protein_1.jpg" alt="Whey Protein" class="cart-item-image">
-                        <div class="flex-grow-1">
-                            <h3 class="cart-item-title h5 mb-2">Whey Protein Premium</h3>
-                            <div class="cart-item-price mb-2">39.99 €</div>
-                            <div class="d-flex align-items-center gap-2">
-                                <button class="quantity-btn">-</button>
-                                <input type="number" class="form-control w-25 text-center" value="1" min="1">
-                                <button class="quantity-btn">+</button>
-                            </div>
-                        </div>
-                        <button class="btn text-white">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
+                    @foreach($cart as $id => $item)
+                        @php
+                            $total += $item['price'] * $item['quantity'];
+                        @endphp
+                        <div class="cart-item p-3 mb-3 d-flex align-items-center gap-3">
 
-                    <div class="cart-item p-3 mb-3 d-flex align-items-center gap-3">
-                        <img src="../images/products/product_creatin.jpg" alt="Creatine" class="cart-item-image">
-                        <div class="flex-grow-1">
-                            <h3 class="cart-item-title h5 mb-2">Creatine Monohydrate</h3>
-                            <div class="cart-item-price mb-2">24.99 €</div>
-                            <div class="d-flex align-items-center gap-2">
-                                <button class="quantity-btn">-</button>
-                                <input type="number" class="form-control w-25 text-center" value="2" min="1">
-                                <button class="quantity-btn">+</button>
+                            <img src="{{ asset('storage/' . $item['image']) }}"
+                                 class="cart-item-image"
+                                 alt="{{ $item['name'] }}">
+                            <div class="flex-grow-1">
+                                <h3 class="cart-item-title h5 mb-2">{{ $item['name'] }}</h3>
+                                <div class="cart-item-price mb-2">{{ number_format($item['price'], 2) }} €</div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <form method="POST" action="{{ route('cart.update', $id) }}">
+                                        @csrf
+                                        <button class="quantity-btn" name="action" value="decrease">-</button>
+                                        <input type="number" name="quantity" class="form-control w-25 text-center" value="{{ $item['quantity'] }}" min="1">
+                                        <button class="quantity-btn" name="action" value="increase">+</button>
+                                    </form>
+                                </div>
                             </div>
+                            <form method="POST" action="{{ route('cart.remove', $id) }}">
+                                @csrf
+                                <button class="btn text-white">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </div>
-                        <button class="btn text-white">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 
@@ -46,13 +50,16 @@
                     <div class="mb-4">
                         <h5 class="text-white mb-3">Contact Information</h5>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="First Name" required>
+                            <input type="text" class="form-control" placeholder="First Name" required
+                            value="{{ old('first_name', $user->first_name ?? '') }}">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Last Name" required>
+                            <input type="text" class="form-control" placeholder="Last Name" required
+                                   value="{{ old('last_name', $user->last_name ?? '') }}">
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email" required>
+                            <input type="email" class="form-control" placeholder="Email" required
+                                   value="{{ old('email', $user->email ?? '') }}">
                         </div>
                         <div class="mb-3">
                             <input type="tel" class="form-control" placeholder="Phone Number" required>
@@ -62,7 +69,8 @@
                     <div class="mb-4">
                         <h5 class="text-white mb-3">Shipping Address</h5>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Street Address" required>
+                            <input type="text" class="form-control" placeholder="Street Address" required
+                                   value="{{ old('address', $user->address ?? '') }}">
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" placeholder="Apartment, suite, etc. (optional)">
@@ -128,25 +136,22 @@
                         <h5 class="text-white mb-3">Order Summary</h5>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Subtotal</span>
-                            <span>89.97 €</span>
+                            <span>{{ number_format($total, 2) }} €</span>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>Shipping</span>
-                            <span>Free</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                            <span>Discount</span>
-                            <span>-5.50 €</span>
+                            <span>4.40 €</span>
                         </div>
 
-                        <div class="mb-4">
-                            <input type="text" class="form-control mb-2" placeholder="Enter discount code">
-                            <button class="btn btn-outline-light w-100">Apply Discount</button>
-                        </div>
+
+
 
                         <div class="d-flex justify-content-between border-top pt-3 mb-4 fw-bold">
+                            @php
+                            $finalTotal = $total + 4.40;
+                            @endphp
                             <span>Total</span>
-                            <span>84.57 €</span>
+                            <span>{{ number_format($finalTotal, 2) }} €</span>
                         </div>
                         <button class="btn btn-primary w-100 py-2">
                             Proceed to Checkout<i class="bi bi-arrow-right ms-2"></i>
