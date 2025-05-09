@@ -41,6 +41,8 @@ class ProductController extends Controller
             'description'    => 'required|string',
             'price'          => 'required|numeric',
             'stock_quantity' => 'required|integer|min:0',
+            'category_id'    => 'required|exists:categories,id',
+            'sale'           => 'required|boolean',
             'images'         => 'required|array|min:2',
             'images.*'       => 'image|max:2048',
         ]);
@@ -57,9 +59,10 @@ class ProductController extends Controller
             'description'    => $data['description'],
             'price'          => $data['price'],
             'stock_quantity' => $data['stock_quantity'],
-            'image_url'      => $paths[0],   // first image as main
-            'sale'           => false,       // default sale = false
-            'rating'         => 0,           // default rating = 0
+            'category_id'    => $data['category_id'],
+            'sale'           => $data['sale'],
+            'image_url'      => $paths[0],
+            'rating'         => 0,
         ]);
 
         // 3) Save all image records
@@ -81,14 +84,23 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->validate([
-            'name'           => 'required|string|max:255',
-            'description'    => 'required|string',
-            'price'          => 'required|numeric',
-            'stock_quantity' => 'required|integer|min:0',
-            'images.*'       => 'image|max:2048',   // nové obrázky sú voliteľné
+            'name'            => 'required|string|max:255',
+            'description'     => 'required|string',
+            'price'           => 'required|numeric',
+            'stock_quantity'  => 'required|integer|min:0',
+            'category_id'    => 'required|exists:categories,id',
+            'sale'           => 'required|boolean',
+            'images.*'        => 'image|max:2048',
         ]);
 
-        $product->update($data);
+        $product->update([
+            'name'           => $data['name'],
+            'description'    => $data['description'],
+            'price'          => $data['price'],
+            'stock_quantity' => $data['stock_quantity'],
+            'category_id'    => $data['category_id'],
+            'sale'           => $data['sale'],
+        ]);
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {

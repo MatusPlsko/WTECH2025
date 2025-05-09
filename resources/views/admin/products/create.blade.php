@@ -86,6 +86,24 @@
                                                   required>{{ old('description') }}</textarea>
                                     </div>
 
+                                    <div class="mb-3">
+                                        <label class="form-label">Category</label>
+                                        <select name="category_id"
+                                                class="form-select @error('category_id') is-invalid @enderror"
+                                                required>
+                                            <option value="">-- vyber kategóriu --</option>
+                                            @foreach(\App\Models\Category::all() as $cat)
+                                                <option value="{{ $cat->id }}"
+                                                    {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                                    {{ $cat->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-sm-6 mb-3">
                                             <label class="form-label">Price (€)</label>
@@ -97,6 +115,15 @@
                                                    placeholder="0.00"
                                                    required>
                                         </div>
+
+                                        <div class="mb-3">
+                                            <label for="sale" class="form-label">On Sale?</label>
+                                            <select name="sale" id="sale" class="form-select" required>
+                                                <option value="0" {{ old('sale') === '0' ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ old('sale') === '1' ? 'selected' : '' }}>Yes</option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-sm-6 mb-3">
                                             <label class="form-label">Stock</label>
                                             <input type="number"
