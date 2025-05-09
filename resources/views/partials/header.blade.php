@@ -2,10 +2,21 @@
     <nav class="navbar navbar-upper">
         <div class="container-fluid">
             <a id="main" class="navbar-brand" href="{{route('home')}}"><b>TECH</b>nutrition</a>
+
             <div class="justify-content-center text-center">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn p-0" type="submit"><i class="bi bi-search fs-3"></i></button>
+                <form action="{{ route('products.index') }}" method="GET" class="d-flex" role="search">
+
+                <input
+                        class="form-control me-2"
+                        type="search"
+                        name="q"                                {{-- názov parametra pre vyhľadávanie --}}
+                        value="{{ request('q') }}"              {{-- uchová aktuálny filter po reload-e --}}
+                        placeholder="Hľadaj produkty…"
+                        aria-label="Search"
+                    >
+                    <button class="btn p-0" type="submit">
+                        <i class="bi bi-search fs-3"></i>
+                    </button>
                 </form>
             </div>
             <div class="d-flex align-items-center gap-2 ms-auto">
@@ -73,12 +84,12 @@
                             ALL PRODUCTS
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{route('products')}}">Protein</a></li>
-                            <li><a class="dropdown-item" href="{{route('products')}}">Amino Acids</a></li>
-                            <li><a class="dropdown-item" href="{{route('products')}}">Creatine</a></li>
-                            <li><a class="dropdown-item" href="{{route('products')}}">Pre-workout</a></li>
-                            <li><a class="dropdown-item" href="{{route('products')}}">Weight Loss</a></li>
-                            <li><a class="dropdown-item" href="{{route('products')}}">Vitamins</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Protein</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Amino Acids</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Creatine</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Pre-workout</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Weight Loss</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Vitamins</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

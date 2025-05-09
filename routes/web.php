@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\CustomLoginController;
+use Illuminate\Http\Request;
+use App\Models\Product;
 
 Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
@@ -37,3 +39,6 @@ Route::prefix('admin')
         Route::put('products/{product}',      [ProductController::class,'update'])->name('products.update');
         Route::delete('products/{product}',   [ProductController::class,'destroy'])->name('products.destroy');
     });
+
+Route::get('/products', [ProductController::class, 'index'])
+    ->name('products.index');

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -21,5 +22,30 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Scope pre full-textové vyhľadávanie
+     *
+     * @param  Builder  $query
+     * @param  string   $term
+     * @return Builder
+     */
+
+    public function scopeFullTextSearch(Builder $query, string $term)
+    {
+        // použijeme websearch_to_tsquery pre jednoduché hľadanie (podobné Google)
+        $query->whereRaw(
+            "to_tsvector('english', coalesce(name,'') || ' ' || coalesce(description,''))
+             @@ websearch_to_tsquery('english', ?)",
+            [$term]
+        );
+    }
+
+    protected function prepareTerm(string $term): string
+    {
+        $words = array_filter(explode(' ', $term));
+        $prefixed = array_map(fn($w) => '+' . $w . '*', $words);
+        return implode(' ', $prefixed);
     }
 }

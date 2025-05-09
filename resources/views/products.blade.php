@@ -90,16 +90,15 @@
                 </div>
             </div>
             <div class="product-grid">
-
-                @foreach($products as $p)
-                    <div class="card">
-
+                {{-- sem vložíme full-text wrapper --}}
+                @if($products->count())
+                    @foreach($products as $p)
+                        <div class="card">
                             {{-- Image --}}
                             @if($p->images->first())
                                 <a href="">
                                     <img src="{{ asset('storage/'.$p->images->first()->path) }}"
                                          class="card-img-top"
-
                                          alt="{{ $p->name }}">
                                 </a>
                             @else
@@ -115,32 +114,20 @@
                             </div>
 
                             {{-- Add to Cart Button --}}
-                        <a href="" class="btn btn-primary">Add to Cart</a>
-
-                    </div>
-                @endforeach
+                            <a href="" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="text-center">Žiadne produkty na zobrazenie.</p>
+                @endif
+            </div>
 
 
 
             <div class="pagination-section">
-                <nav aria-label="Product navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $products->links() }}
             </div>
+
         </div>
     </div>
 

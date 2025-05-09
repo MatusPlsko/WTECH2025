@@ -121,4 +121,14 @@ class ProductController extends Controller
             ->route('admin.products.index')
             ->with('success','Produkt bol odstránený.');
     }
+
+    public function index(Request $request)
+    {
+        $query = Product::query();
+        if ($term = $request->input('q')) {
+            $query->fullTextSearch($term);
+        }
+        $products = $query->paginate(12)->withQueryString();
+        return view('products', compact('products'));
+    }
 }
