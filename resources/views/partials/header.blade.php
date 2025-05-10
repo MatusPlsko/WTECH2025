@@ -80,16 +80,35 @@
             <div class="collapse navbar-collapse w-500 justify-content-center" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
                             ALL PRODUCTS
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Protein</a></li>
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Amino Acids</a></li>
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Creatine</a></li>
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Pre-workout</a></li>
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Weight Loss</a></li>
-                            <li><a class="dropdown-item" href="{{ route('products.index') }}">Vitamins</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a
+                                    class="dropdown-item {{ request()->routeIs('products.index') && !request('category') ? 'active' : '' }}"
+                                    href="{{ route('products.index') }}"
+                                >
+                                    All Products
+                                </a>
+                            </li>
+                            @foreach($categories as $cat)
+                                <li>
+                                    <a
+                                        class="dropdown-item {{ request()->routeIs('products.filter') && request('category') == $cat->id ? 'active' : '' }}"
+                                        href="{{ route('products.filter', ['category' => $cat->id]) }}"
+                                    >
+                                        {{ $cat->name }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </li>
                     <li class="nav-item">

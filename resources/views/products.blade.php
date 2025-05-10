@@ -4,16 +4,24 @@
 
 
     <div class="products-container">
+        {{-- SIDEBAR --}}
         <div class="categories-sidebar">
             <h3>CATEGORIES</h3>
             <ul class="list-unstyled">
-                <li><a href="products.html">Proteins</a></li>
-                <li><a href="products.html">Amino Acids</a></li>
-                <li><a href="products.html">Creatine</a></li>
-                <li><a href="products.html">Pre-workout</a></li>
-                <li><a href="products.html">Post-workout</a></li>
-                <li><a href="products.html">Weight Loss</a></li>
-                <li><a href="products.html">Vitamins</a></li>
+                <li>
+                    <a
+                        href="{{ route('products.index') }}"
+                        class="{{ is_null($currentCategory) ? 'fw-bold' : '' }}"
+                    >All Products</a>
+                </li>
+                @foreach($categories as $cat)
+                    <li>
+                        <a
+                            href="{{ route('products.filter', ['category' => $cat->id]) }}"
+                            class="{{ $currentCategory == $cat->id ? 'fw-bold' : '' }}"
+                        >{{ $cat->name }}</a>
+                    </li>
+                @endforeach
             </ul>
 
             <h3 class="mt-4">PRICE RANGE</h3>
@@ -72,9 +80,10 @@
             </ul>
         </div>
 
+        {{-- HLAVNÁ ČASŤ S PRODUKTMI --}}
         <div class="products-section">
             <div class="d-flex align-items-center">
-                <h3 class="h3 mb-4 text-secondary fw-bold">     Featured Products</h3>
+                <h3 class="h3 mb-4 text-secondary fw-bold">Featured Products</h3>
                 <div class="ms-auto">
                     <div class="dropdown">
                         <button class="btn btn-filter dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -89,14 +98,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="product-grid">
-                {{-- sem vložíme full-text wrapper --}}
                 @if($products->count())
                     @foreach($products as $p)
                         <div class="card">
-                            {{-- Image --}}
                             @if($p->images->first())
-                                <a href="{{route('showProduct', $p->id)}}">
+                                <a href="{{ route('showProduct', $p->id) }}">
                                     <img src="{{ asset('storage/'.$p->images->first()->path) }}"
                                          class="card-img-top"
                                          alt="{{ $p->name }}">
@@ -107,7 +115,6 @@
                                 </div>
                             @endif
 
-                            {{-- Name & Price --}}
                             <div class="card-body">
                                 <h5 class="card-title">{{ $p->name }}</h5>
                                 <p class="card-text">€{{ number_format($p->price, 2) }}</p>
@@ -117,7 +124,6 @@
                                 @csrf
                                 <button type="submit" class="btn btn-primary">Add to Cart</button>
                             </form>
-
                         </div>
                     @endforeach
                 @else
@@ -125,14 +131,12 @@
                 @endif
             </div>
 
-
-
             <div class="pagination-section">
                 {{ $products->links() }}
             </div>
-
         </div>
     </div>
+
 
     <footer class="footer">
         <div class="container text-center text-white py-4">

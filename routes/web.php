@@ -28,7 +28,10 @@ Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('ca
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
+Route::get('/products', [ProductController::class, 'index'])
+    ->name('products.index');
+Route::get('/products/category/{category}', [ProductController::class, 'filter'])
+    ->name('products.filter');
 
 Route::prefix('admin')
     ->name('admin.')

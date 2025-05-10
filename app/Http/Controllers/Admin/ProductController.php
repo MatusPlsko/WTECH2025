@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -21,13 +22,19 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products'));
     }
 
-    public function showProducts()
+    public function showProducts(Request $request)
     {
-
+        // 1) načítame produkty (bez filtra)
         $products = Product::with('images')->paginate(12);
 
+        // 2) načítame všetky kategórie pre sidebar a header
+        $categories = Category::all();
 
-        return view('products', compact('products'));
+        // 3) nastavíme "aktuálnu" kategóriu na null
+        $currentCategory = null;
+
+        // 4) pošleme do view
+        return view('products', compact('products', 'categories', 'currentCategory'));
     }
 
     public function create()
@@ -151,11 +158,27 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        $categories = Category::all();
+        $currentCategory = null; // keďže tu je vždy "všetko"
+
         $query = Product::query();
         if ($term = $request->input('q')) {
             $query->fullTextSearch($term);
         }
         $products = $query->paginate(12)->withQueryString();
-        return view('products', compact('products'));
+        return view('products', compact('products','categories','currentCategory'));
+    }
+    public function filter($categoryId)
+    {
+        $categories = Category::all();
+
+        $products = Product::with('images')
+            ->where('category_id', $categoryId)
+            ->paginate(12);
+
+        // teraz pri filtrovaní je nastavená práve táto
+        $currentCategory = $categoryId;
+
+        return view('products', compact('products', 'categories', 'currentCategory'));
     }
 }
