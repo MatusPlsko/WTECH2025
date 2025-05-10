@@ -29,7 +29,7 @@
             <form method="GET" action="{{ route('products.index') }}">
                 {{-- zachovaj ostatné filtre --}}
                 <input type="hidden" name="category" value="{{ $currentCategory }}">
-                <input type="hidden" name="q"        value="{{ $term }}">
+                <input type="hidden" name="q" value="{{ request('q') }}">
 
                 {{-- Min Price --}}
                 <div class="mb-3">
