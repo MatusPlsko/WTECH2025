@@ -10,7 +10,7 @@ class Product extends Model
     // ktoré polia môžeme hromadne vkladať
     protected $fillable = [
         'name','description','price','stock_quantity',
-        'category_id','sale','image_url','rating'
+        'category_id','sale','brand','image_url','rating'
     ];
 
 

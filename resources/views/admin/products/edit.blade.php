@@ -29,41 +29,70 @@
 
                             <div class="row g-4">
 
-                                {{-- Left: Image preview + upload --}}
                                 <div class="col-md-4">
-                                    <label class="form-label">Product Images</label>
-                                    <div
-                                        id="images-preview"
-                                        class="border rounded p-3 text-center bg-light"
-                                        style="min-height:180px; position:relative;"
-                                    >
-                                        {{-- show existing thumbs --}}
-                                        @foreach($product->images as $img)
+                                    <label class="form-label">Existing Images</label>
+
+
+                                    @foreach($product->images as $img)
+                                        <div class="mb-3 border rounded p-3 d-flex align-items-center">
+                                            {{-- Thumbnail --}}
                                             <img
                                                 src="{{ asset('storage/'.$img->path) }}"
-                                                class="thumb me-2 mb-2"
-                                                style="height:60px; object-fit:cover; border-radius:4px;"
+                                                alt="thumb"
+                                                id="preview_img_{{ $img->id }}"
+                                                style="height:80px; object-fit:cover; border-radius:4px;"
+                                                class="me-3"
                                             >
-                                        @endforeach
 
-                                        {{-- placeholder if no images --}}
-                                        @if($product->images->isEmpty())
-                                            <div class="text-secondary">
-                                                <i class="bi bi-image fs-1"></i>
-                                                <p class="mt-2 mb-0">Click to add (min. 2)</p>
+                                            {{-- Replace + Delete kontejner --}}
+                                            <div class="row flex-grow-1 gx-2 gy-1 align-items-center">
+                                                {{-- zmenené: col-auto → col, input dostal w-100 a nowrap --}}
+                                                <div class="col text-nowrap">
+                                                    <label class="form-label mb-1">Replace:</label>
+                                                    <input
+                                                        type="file"
+                                                        name="replace_images[{{ $img->id }}]"
+                                                        accept="image/*"
+                                                        class="form-control form-control-sm w-100"
+                                                        style="white-space: nowrap;"
+                                                        data-target="#preview_img_{{ $img->id }}"
+                                                    >
+                                                </div>
+                                                <div class="col-auto text-nowrap">
+                                                    <div class="form-check">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="checkbox"
+                                                            name="delete_images[]"
+                                                            value="{{ $img->id }}"
+                                                            id="delete_img_{{ $img->id }}"
+                                                        >
+                                                        <label class="form-check-label mb-0 ps-2" for="delete_img_{{ $img->id }}">
+                                                            Delete
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @endif
+                                        </div>
+                                    @endforeach
 
-                                        {{-- invisible input in same box --}}
-                                        <input
-                                            id="images-input"
-                                            type="file"
-                                            name="images[]"
-                                            multiple
-                                            accept="image/*"
-                                            class="position-absolute top-0 start-0 w-100 h-100"
-                                            style="opacity:0; cursor:pointer;"
-                                        >
+
+
+                                    {{-- Add new images --}}
+                                    <label class="form-label mt-4">
+                                        Add New Images <small class="text-muted">(opt.)</small>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="new_images"              {{-- dôležité, id musí sedieť --}}
+                                        name="new_images[]"
+                                        multiple
+                                        accept="image/*"
+                                        class="form-control form-control-sm mb-2"
+                                    >
+
+                                    <div id="new_images_preview" class="d-flex flex-wrap gap-2 mb-4">
+                                        {{-- sem sa dorobia preview thumbnaily --}}
                                     </div>
                                 </div>
 
@@ -88,6 +117,25 @@
                                             rows="4"
                                             required
                                         >{{ old('description',$product->description) }}</textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Brand</label>
+                                        <select
+                                            name="brand"
+                                            class="form-select @error('brand') is-invalid @enderror"
+                                            required
+                                        >
+                                            <option value="">-- vyber brand --</option>
+                                            <option value="TechNutrition"    {{ old('brand')=='TechNutrition'    ? 'selected':'' }}>TechNutrition</option>
+                                            <option value="BeamNutrition"    {{ old('brand')=='BeamNutrition'    ? 'selected':'' }}>BeamNutrition</option>
+                                            <option value="ProteinTech"      {{ old('brand')=='ProteinTech'      ? 'selected':'' }}>ProteinTech</option>
+                                            <option value="BioTech"          {{ old('brand')=='BioTech'          ? 'selected':'' }}>BioTech</option>
+                                            <option value="Wsupplements"     {{ old('brand')=='Wsupplements'     ? 'selected':'' }}>Wsupplements</option>
+                                        </select>
+                                        @error('brand')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
@@ -166,35 +214,51 @@
 
     @push('scripts')
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const inp   = document.getElementById('images-input');
-                const prev  = document.getElementById('images-preview');
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('input.replace-input').forEach(input => {
+                    input.addEventListener('change', function() {
+                        const file = this.files[0];
+                        if (!file) return;
 
-                inp.addEventListener('change', () => {
-                    // remove NEW thumbs only
-                    prev.querySelectorAll('img.new').forEach(el => el.remove());
+                        const preview = document.querySelector(this.dataset.target);
+                        if (!preview) return;
 
-                    const files = Array.from(inp.files);
-                    if (files.length) {
-                        // hide placeholder texts
-                        prev.querySelectorAll('div.text-secondary').forEach(d => d.style.display='none');
-                    }
-                    files.forEach(file => {
-                        if (!file.type.startsWith('image/')) return;
                         const reader = new FileReader();
-                        reader.onload = e => {
+                        reader.onload = e => preview.src = e.target.result;
+                        reader.readAsDataURL(file);
+                    });
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const input = document.getElementById('new_images');
+                const preview = document.getElementById('new_images_preview');
+
+                input.addEventListener('change', function() {
+                    // vymažeme staré
+                    preview.innerHTML = '';
+
+                    Array.from(this.files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
                             const img = document.createElement('img');
                             img.src = e.target.result;
-                            img.classList.add('new','me-2','mb-2');
                             img.style.height = '60px';
                             img.style.objectFit = 'cover';
                             img.style.borderRadius = '4px';
-                            prev.appendChild(img);
+                            img.classList.add('me-2','mb-2');
+                            preview.appendChild(img);
                         };
                         reader.readAsDataURL(file);
                     });
                 });
             });
         </script>
+
+
+
+
+
     @endpush
 @endsection

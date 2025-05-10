@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -39,6 +40,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name'           => 'required|string|max:255',
             'description'    => 'required|string',
+            'brand'          => 'required|in:TechNutrition,BeamNutrition,ProteinTech,BioTech,Wsupplements',
             'price'          => 'required|numeric',
             'stock_quantity' => 'required|integer|min:0',
             'category_id'    => 'required|exists:categories,id',
@@ -57,6 +59,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name'           => $data['name'],
             'description'    => $data['description'],
+            'brand'          => $data['brand'],
             'price'          => $data['price'],
             'stock_quantity' => $data['stock_quantity'],
             'category_id'    => $data['category_id'],
@@ -84,26 +87,50 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->validate([
-            'name'            => 'required|string|max:255',
-            'description'     => 'required|string',
-            'price'           => 'required|numeric',
-            'stock_quantity'  => 'required|integer|min:0',
-            'category_id'    => 'required|exists:categories,id',
-            'sale'           => 'required|boolean',
-            'images.*'        => 'image|max:2048',
+            'name'             => 'required|string|max:255',
+            'description'      => 'required|string',
+            'brand'          => 'required|in:TechNutrition,BeamNutrition,ProteinTech,BioTech,Wsupplements',
+            'price'            => 'required|numeric',
+            'stock_quantity'   => 'required|integer|min:0',
+            'category_id'      => 'required|exists:categories,id',
+            'sale'             => 'required|boolean',
+            'replace_images.*' => 'nullable|image|max:2048',
+            'delete_images'    => 'array',
+            'delete_images.*'  => 'integer|exists:product_images,id',
+            'new_images.*'     => 'nullable|image|max:2048',
         ]);
 
-        $product->update([
-            'name'           => $data['name'],
-            'description'    => $data['description'],
-            'price'          => $data['price'],
-            'stock_quantity' => $data['stock_quantity'],
-            'category_id'    => $data['category_id'],
-            'sale'           => $data['sale'],
-        ]);
+        // 1) Základné update atributov
+        $product->update($data);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
+        // 2) Spracuj zmazanie vybraných obrázkov
+        if ($request->filled('delete_images')) {
+            foreach ($request->input('delete_images') as $imgId) {
+                $img = $product->images()->find($imgId);
+                if ($img) {
+                    Storage::disk('public')->delete($img->path);
+                    $img->delete();
+                }
+            }
+        }
+
+        // 3) Spracuj náhradu vybraných obrázkov
+        if ($request->hasFile('replace_images')) {
+            foreach ($request->file('replace_images') as $imgId => $file) {
+                if ($file) {
+                    $img = $product->images()->find($imgId);
+                    if ($img) {
+                        Storage::disk('public')->delete($img->path);
+                        $path = $file->store('products', 'public');
+                        $img->update(['path' => $path]);
+                    }
+                }
+            }
+        }
+
+        // 4) Pridaj nové obrázky
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $file) {
                 $path = $file->store('products', 'public');
                 $product->images()->create(['path' => $path]);
             }

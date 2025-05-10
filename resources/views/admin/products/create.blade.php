@@ -87,6 +87,25 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label class="form-label">Brand</label>
+                                        <select
+                                            name="brand"
+                                            class="form-select @error('brand') is-invalid @enderror"
+                                            required
+                                        >
+                                            <option value="">-- vyber brand --</option>
+                                            <option value="TechNutrition"    {{ old('brand')=='TechNutrition'    ? 'selected':'' }}>TechNutrition</option>
+                                            <option value="BeamNutrition"    {{ old('brand')=='BeamNutrition'    ? 'selected':'' }}>BeamNutrition</option>
+                                            <option value="ProteinTech"      {{ old('brand')=='ProteinTech'      ? 'selected':'' }}>ProteinTech</option>
+                                            <option value="BioTech"          {{ old('brand')=='BioTech'          ? 'selected':'' }}>BioTech</option>
+                                            <option value="Wsupplements"     {{ old('brand')=='Wsupplements'     ? 'selected':'' }}>Wsupplements</option>
+                                        </select>
+                                        @error('brand')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label class="form-label">Category</label>
                                         <select name="category_id"
                                                 class="form-select @error('category_id') is-invalid @enderror"
