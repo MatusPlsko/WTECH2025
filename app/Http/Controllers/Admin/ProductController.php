@@ -158,32 +158,67 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $categories = Category::all();
-        $currentCategory = null; // keďže tu je vždy "všetko"
-        $minPrice        = $request->input('min_price');
-        $maxPrice        = $request->input('max_price');
-        $term            = $request->input('q');
+        // validujeme min/max price
+        $validated = $request->validate([
+            'min_price' => 'nullable|numeric|lte:max_price',
+            'max_price' => 'nullable|numeric|gte:min_price',
+            'q'         => 'nullable|string',
+            'category'  => 'nullable|exists:categories,id',
+        ]);
 
         $query = Product::query();
-        if ($term = $request->input('q')) {
-            $query->fullTextSearch($term);
+
+        $min = $validated['min_price'] ?? null;
+        $max = $validated['max_price'] ?? null;
+
+        if ($validated['q'] ?? false) {
+            $query->fullTextSearch($validated['q']);
         }
-        $products = $query->paginate(12)->withQueryString();
-        if (! is_null($minPrice) && is_numeric($minPrice)) {
-            $query->where('price', '>=', $minPrice);
+        if ($min !== null) {
+            $query->where('price','>=',$min);
         }
-        if (! is_null($maxPrice) && is_numeric($maxPrice)) {
-            $query->where('price', '<=', $maxPrice);
+        if ($max !== null) {
+            $query->where('price','<=',$max);
+        }
+        if (! empty($validated['category'])) {
+            $query->where('category_id', $validated['category']);
+        }
+        if ($sort = $request->input('sort')) {
+            if ($sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            } elseif ($sort === 'newest') {
+                $query->orderBy('created_at', 'desc');
+            }
         }
 
         $products = $query->paginate(12)->withQueryString();
 
-        return view('products', compact('products',
-            'categories', 'currentCategory','minPrice','maxPrice','term'));
+        return view('products', [
+            'products'        => $products,
+            'categories'      => Category::all(),
+            'currentCategory' => $validated['category'] ?? null,
+            'minPrice'        => $min,
+            'maxPrice'        => $max,
+            'sort'            => $validated['sort'] ?? null,
+        ]);
     }
-    public function filter($categoryId)
+    public function filter(Request $request, $categoryId)
     {
+
         $categories = Category::all();
+        $query = Product::with('images')->where('category_id', $categoryId);
+
+        if ($sort = $request->input('sort')) {
+            if ($sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            } elseif ($sort === 'newest') {
+                $query->orderBy('created_at', 'desc');
+            }
+        }
 
         $products = Product::with('images')
             ->where('category_id', $categoryId)
@@ -191,7 +226,8 @@ class ProductController extends Controller
 
         // teraz pri filtrovaní je nastavená práve táto
         $currentCategory = $categoryId;
+        $products = $query->paginate(12)->withQueryString();
 
-        return view('products', compact('products', 'categories', 'currentCategory'));
+        return view('products', compact('products','categories','currentCategory','sort'));
     }
 }

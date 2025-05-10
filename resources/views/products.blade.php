@@ -26,6 +26,17 @@
 
             <h3 class="mt-4">PRICE RANGE</h3>
 
+            @if($errors->has('min_price') || $errors->has('max_price'))
+                <div class="alert alert-warning">
+                    @if($errors->has('min_price'))
+                        <div>{{ $errors->first('min_price') }}</div>
+                    @endif
+                    @if($errors->has('max_price'))
+                        <div>{{ $errors->first('max_price') }}</div>
+                    @endif
+                </div>
+            @endif
+
             <form method="GET" action="{{ route('products.index') }}">
                 {{-- zachovaj ostatné filtre --}}
                 <input type="hidden" name="category" value="{{ $currentCategory }}">
@@ -116,10 +127,24 @@
                             Filter By
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
-                            <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
-                            <li><a class="dropdown-item" href="#">Newest First</a></li>
-                            <li><a class="dropdown-item" href="#">Most Popular</a></li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ request()->fullUrlWithQuery(['sort' => 'price_asc']) }}"
+                                >Price: Low to High</a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ request()->fullUrlWithQuery(['sort' => 'price_desc']) }}"
+                                >Price: High to Low</a>
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ request()->fullUrlWithQuery(['sort' => 'newest']) }}"
+                                >Newest First</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
