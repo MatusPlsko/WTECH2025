@@ -139,17 +139,19 @@
                             <span>{{ number_format($total, 2) }} €</span>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
+                            @php
+                                $shipping = count($cart) === 0 ? 0 : 4.40;
+                                $finalTotal = $total + $shipping;
+                            @endphp
                             <span>Shipping</span>
-                            <span>4.40 €</span>
+                            <span>{{ number_format($shipping, 2) }} €</span>
                         </div>
 
 
 
 
                         <div class="d-flex justify-content-between border-top pt-3 mb-4 fw-bold">
-                            @php
-                            $finalTotal = $total + 4.40;
-                            @endphp
+
                             <span>Total</span>
                             <span>{{ number_format($finalTotal, 2) }} €</span>
                         </div>

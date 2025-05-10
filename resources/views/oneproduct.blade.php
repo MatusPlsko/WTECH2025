@@ -31,27 +31,34 @@
                         <h1>{{$product->name}}</h1>
                         <div class="price">{{$product->price,2}} €</div>
                         <div class="rating mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                            <span class="ms-2">(4.5/5)</span>
+                            @php
+                                $averageRating = $product->averageRating();
+                            @endphp
+
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $averageRating)
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                @elseif($i - 0.5 == $averageRating)
+                                    <i class="bi bi-star-half text-warning"></i>
+                                @else
+                                    <i class="bi bi-star text-warning"></i>
+                                @endif
+                            @endfor
+                            <span class="ms-2">({{ number_format($averageRating, 1) }} / 5)</span>
                         </div>
                         <p class="description">
                             {{$product->description}}
                         </p>
-                        <div class="quantity-selector mb-3">
-                            <label for="quantity">Quantity:</label>
-                            <select class="form-select" id="quantity" style="width: 100px;">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary btn-lg">Add to Cart</button>
+
+                        <form method="POST" action="{{ route('cart.add', $product->id) }}">
+                            @csrf
+                            <div class="quantity-selector mb-3">
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" id="quantity" name="quantity" class="form-control" style="width: 100px;"
+                                       min="1" max="{{ $product->stock_quantity }}" value="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -81,37 +88,56 @@
                 </div>
                 <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                     <h3>Customer Reviews</h3>
-                    <div class="review-item mb-4">
-                        <div class="d-flex justify-content-between">
-                            <div class="rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
+
+                    {{-- Review submission form (if logged in) --}}
+                    <div class="mb-4">
+                        <h5>Leave a Review</h5>
+                        <form method="POST" action="{{ route('reviews.store', $product->id) }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <select class="form-select" id="rating" name="rating" style="width: 100px;">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}">{{ $i }} ★</option>
+                                    @endfor
+                                </select>
                             </div>
-                            <small class="text-muted">John Doe - March 15, 2024</small>
-                        </div>
-                        <h5>Great product!</h5>
-                        <p>Best protein powder I've ever used. Mixes well and tastes great.</p>
-                    </div>
-                    <div class="review-item">
-                        <div class="d-flex justify-content-between">
-                            <div class="rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Your Review</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
                             </div>
-                            <small class="text-muted">Jane Smith - March 10, 2024</small>
-                        </div>
-                        <h5>Good quality</h5>
-                        <p>Very good protein powder, would recommend to others.</p>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
                     </div>
+
+                    {{-- Existing reviews --}}
+                    @forelse($product->reviews as $review)
+                        <div class="review-item mb-4 border-bottom pb-3">
+                            <div class="d-flex justify-content-between">
+                                <div class="rating">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $review->rating)
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        @else
+                                            <i class="bi bi-star text-warning"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <small class="text-muted">
+                                    {{ $review->user_id}} – {{ $review->created_at->format('F d, Y') }}
+                                </small>
+                            </div>
+                            <p class="mt-2">{{ $review->comment }}</p>
+                        </div>
+                    @empty
+                        <p>No reviews yet.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
+
+
+
 
         <!-- Similar Products -->
         <div class="similar-products mt-5">

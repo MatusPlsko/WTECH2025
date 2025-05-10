@@ -13,6 +13,10 @@ class Product extends Model
         'category_id','sale','brand','image_url','rating'
     ];
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
     // definícia 1:N vzťahu na obrázky
     public function images()
@@ -47,5 +51,10 @@ class Product extends Model
         $words = array_filter(explode(' ', $term));
         $prefixed = array_map(fn($w) => '+' . $w . '*', $words);
         return implode(' ', $prefixed);
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating');
     }
 }

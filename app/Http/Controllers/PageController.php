@@ -23,9 +23,11 @@ class PageController extends Controller
     }
     public function showProduct(Product $product)
     {
-        $product->load('images');
+        $product->load(['images', 'reviews.user']);
+
         return view('oneproduct', compact('product'));
     }
+
     public function products()
     {
         $products = Product::with('images')->paginate(12);

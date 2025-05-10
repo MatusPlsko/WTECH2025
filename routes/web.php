@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Admin\ProductController;
@@ -26,6 +27,8 @@ Route::get('/register-success', [PageController::class, 'registersuccess'])->nam
 Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
 
 Route::prefix('admin')
     ->name('admin.')
