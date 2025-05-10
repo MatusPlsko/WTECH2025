@@ -28,6 +28,11 @@
                 <!-- Product Info -->
                 <div class="col-md-6">
                     <div class="product-info">
+                        <div style="max-width: 200px">
+                            @if ($errors->has('login'))
+                                <div class="alert alert-danger">{{ $errors->first('login') }}</div>
+                            @endif
+                        </div>
                         <h1>{{$product->name}}</h1>
                         <div class="price">{{$product->price,2}} €</div>
                         <div class="rating mb-3">
@@ -114,6 +119,7 @@
                     @forelse($product->reviews as $review)
                         <div class="review-item mb-4 border-bottom pb-3">
                             <div class="d-flex justify-content-between">
+
                                 <div class="rating">
                                     @for($i = 1; $i <= 5; $i++)
                                         @if($i <= $review->rating)
@@ -124,7 +130,7 @@
                                     @endfor
                                 </div>
                                 <small class="text-muted">
-                                    {{ $review->user_id}} – {{ $review->created_at->format('F d, Y') }}
+                                     {{ $review->created_at->format('F d, Y') }}
                                 </small>
                             </div>
                             <p class="mt-2">{{ $review->comment }}</p>

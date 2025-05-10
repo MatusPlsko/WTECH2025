@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -11,7 +12,10 @@ class PageController extends Controller
 
     public function index()
     {
-        return view('index');
+        $products = Product::latest()->take(8)->get();
+        $categories = Category::all();
+
+        return view('index', compact('products', 'categories'));
     }
     public function about()
     {
@@ -39,7 +43,8 @@ class PageController extends Controller
     }
     public function sale()
     {
-        return view('sale');
+        $products = Product::where('sale', true)->get();
+        return view('sale', compact('products'));
     }
 
     public function shopping_cart()

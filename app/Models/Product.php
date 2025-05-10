@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
-    // ktoré polia môžeme hromadne vkladať
+
     protected $fillable = [
         'name','description','price','stock_quantity',
         'category_id','sale','brand','image_url','rating'

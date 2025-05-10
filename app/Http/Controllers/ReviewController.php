@@ -13,6 +13,12 @@ class ReviewController extends Controller
 {
     public function store(Request $request, $productId)
     {
+
+
+        if (!Auth::check()) {
+            return back()->withErrors(['login' => 'You must be logged in.']);
+        }
+
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string',
