@@ -36,14 +36,20 @@ class Product extends Model
      * @return Builder
      */
 
-    public function scopeFullTextSearch(Builder $query, string $term)
+    public function scopeFullTextSearch(Builder $query, string $term): Builder
     {
-        // použijeme websearch_to_tsquery pre jednoduché hľadanie (podobné Google)
-        $query->whereRaw(
-            "to_tsvector('english', coalesce(name,'') || ' ' || coalesce(description,''))
-             @@ websearch_to_tsquery('english', ?)",
-            [$term]
-        );
+        return $query->where(function(Builder $q) use ($term) {
+            // 1) Full-text (Postgres tsvector)
+            $q->whereRaw(
+                "to_tsvector('english', coalesce(name,'') || ' ' || coalesce(description,''))
+                 @@ websearch_to_tsquery('english', ?)",
+                [$term]
+            )
+                // 2) alebo názov obsahuje reťazec (case-insensitive)
+                ->orWhere('name', 'ILIKE', "%{$term}%")
+                // 3) alebo popis obsahuje reťazec
+                ->orWhere('description', 'ILIKE', "%{$term}%");
+        });
     }
 
     protected function prepareTerm(string $term): string
