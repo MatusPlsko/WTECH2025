@@ -160,13 +160,26 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $currentCategory = null; // keďže tu je vždy "všetko"
+        $minPrice        = $request->input('min_price');
+        $maxPrice        = $request->input('max_price');
+        $term            = $request->input('q');
 
         $query = Product::query();
         if ($term = $request->input('q')) {
             $query->fullTextSearch($term);
         }
         $products = $query->paginate(12)->withQueryString();
-        return view('products', compact('products','categories','currentCategory'));
+        if (! is_null($minPrice) && is_numeric($minPrice)) {
+            $query->where('price', '>=', $minPrice);
+        }
+        if (! is_null($maxPrice) && is_numeric($maxPrice)) {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        $products = $query->paginate(12)->withQueryString();
+
+        return view('products', compact('products',
+            'categories', 'currentCategory','minPrice','maxPrice','term'));
     }
     public function filter($categoryId)
     {

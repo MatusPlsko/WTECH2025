@@ -25,17 +25,43 @@
             </ul>
 
             <h3 class="mt-4">PRICE RANGE</h3>
-            <div class="px-2">
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="small">€0</span>
-                    <span class="small">€100</span>
+
+            <form method="GET" action="{{ route('products.index') }}">
+                {{-- zachovaj ostatné filtre --}}
+                <input type="hidden" name="category" value="{{ $currentCategory }}">
+                <input type="hidden" name="q"        value="{{ $term }}">
+
+                {{-- Min Price --}}
+                <div class="mb-3">
+                    <label class="form-label">Min Price (€)</label>
+                    <input
+                        type="number"
+                        name="min_price"
+                        value="{{ $minPrice ?? '' }}"
+                        step="0.01"
+                        class="form-control form-control-sm"
+                        placeholder="0.00"
+                    >
                 </div>
-                <input type="range" class="form-range mb-3" min="0" max="100" value="100">
-                <div class="d-flex gap-2 mb-3">
-                    <input type="number" class="form-control form-control-sm" placeholder="Min" min="0">
-                    <input type="number" class="form-control form-control-sm" placeholder="Max" min="0">
+
+                {{-- Max Price --}}
+                <div class="mb-3">
+                    <label class="form-label">Max Price (€)</label>
+                    <input
+                        type="number"
+                        name="max_price"
+                        value="{{ $maxPrice ?? '' }}"
+                        step="0.01"
+                        class="form-control form-control-sm"
+                        placeholder="100.00"
+                    >
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary btn-sm w-100">Apply Filters</button>
+            </form>
+
+
+
+
 
             <h3 class="mt-4">RATING</h3>
             <ul class="list-unstyled px-2">
