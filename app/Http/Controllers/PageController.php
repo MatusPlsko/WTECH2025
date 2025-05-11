@@ -18,6 +18,9 @@ class PageController extends Controller
 
         return view('index', compact('products', 'categories'));
     }
+
+
+
     public function about()
     {
         return view('about');

@@ -15,7 +15,7 @@ class ProductController extends Controller
         return view('admin.products.menu');
     }
 
-    // staré “index” presunieme do list()
+
     public function list()
     {
         $products = Product::with('images')->paginate(16);
@@ -42,6 +42,7 @@ class ProductController extends Controller
         return view('admin.products.create');
     }
 
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -56,13 +57,13 @@ class ProductController extends Controller
             'images.*'       => 'image|max:2048',
         ]);
 
-        // 1) Store all files
+
         $paths = [];
         foreach ($request->file('images') as $file) {
             $paths[] = $file->store('products', 'public');
         }
 
-        // 2) Create the product, now including image_url, sale, and rating
+
         $product = Product::create([
             'name'           => $data['name'],
             'description'    => $data['description'],
@@ -75,7 +76,7 @@ class ProductController extends Controller
             'rating'         => 0,
         ]);
 
-        // 3) Save all image records
+
         foreach ($paths as $path) {
             $product->images()->create(['path' => $path]);
         }
@@ -107,10 +108,9 @@ class ProductController extends Controller
             'new_images.*'     => 'nullable|image|max:2048',
         ]);
 
-        // 1) Základné update atributov
+
         $product->update($data);
 
-        // 2) Spracuj zmazanie vybraných obrázkov
         if ($request->filled('delete_images')) {
             foreach ($request->input('delete_images') as $imgId) {
                 $img = $product->images()->find($imgId);
@@ -121,7 +121,7 @@ class ProductController extends Controller
             }
         }
 
-        // 3) Spracuj náhradu vybraných obrázkov
+
         if ($request->hasFile('replace_images')) {
             foreach ($request->file('replace_images') as $imgId => $file) {
                 if ($file) {
@@ -135,7 +135,7 @@ class ProductController extends Controller
             }
         }
 
-        // 4) Pridaj nové obrázky
+
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $file) {
                 $path = $file->store('products', 'public');
@@ -154,7 +154,7 @@ class ProductController extends Controller
             Storage::disk('public')->delete($image->path);
         }
 
-        // 2) Odstrániť záznamy v databáze product_images (ak nemáte ON DELETE CASCADE)
+
         $product->images()->delete();
 
         $product->delete();
@@ -165,7 +165,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        // validujeme min/max price
+
         $validated = $request->validate([
             'min_price' => 'nullable|numeric|min:0|lte:max_price',
             'max_price' => 'nullable|numeric|min:0|gte:min_price',
@@ -241,7 +241,7 @@ class ProductController extends Controller
             ->where('category_id', $categoryId)
             ->paginate(12);
 
-        // teraz pri filtrovaní je nastavená práve táto
+
         $currentCategory = $categoryId;
         $products = $query->paginate(12)->withQueryString();
 

@@ -35,6 +35,10 @@
     font-size: 2rem;
 }
 
+.icon-custom {
+    color: var(--primary-color);
+}
+
 #shop_btn{
     max-width: 80%;
 }
@@ -160,7 +164,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 1rem;
-    
+
 
 }
 
@@ -281,6 +285,11 @@ body {
     background-color: #6c757d;
     color: white;
     border-radius: 10px;
+    width: 100%;
+}
+
+.cart-summary {
+    min-width: 350px;
 }
 
 .summary-box h3 {

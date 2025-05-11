@@ -102,7 +102,7 @@
                                     <option value="" disabled selected>Select Delivery</option>
                                     <option value="Courier">Courier</option>
                                     <option value="Box">Delivery box</option>
-                                    <option value="Odber">Osobný odber</option>
+                                    <option value="Odber">Local pickup</option>
                                 </select>
                             </div>
                         </div>

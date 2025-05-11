@@ -42,6 +42,7 @@
                         <div class="rating mb-3">
                             @php
                                 $averageRating = $product->averageRating();
+
                             @endphp
 
                             @for($i = 1; $i <= 5; $i++)

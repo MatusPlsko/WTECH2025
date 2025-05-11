@@ -99,47 +99,7 @@
 
 
 
-            <h3 class="mt-4">RATING</h3>
-            <ul class="list-unstyled px-2">
-                <li class="mb-2">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rating5">
-                        <label class="form-check-label text-white" for="rating5">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </label>
-                    </div>
-                </li>
-                <li class="mb-2">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rating4">
-                        <label class="form-check-label text-white" for="rating4">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                            & up
-                        </label>
-                    </div>
-                </li>
-                <li class="mb-2">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rating3">
-                        <label class="form-check-label text-white" for="rating3">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                            <i class="bi bi-star text-warning"></i>
-                            & up
-                        </label>
-                    </div>
-                </li>
-            </ul>
+
         </div>
 
         {{-- HLAVNÁ ČASŤ S PRODUKTMI --}}

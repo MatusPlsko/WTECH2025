@@ -9,9 +9,9 @@
                 <input
                         class="form-control me-2"
                         type="search"
-                        name="q"                                {{-- názov parametra pre vyhľadávanie --}}
-                        value="{{ request('q') }}"              {{-- uchová aktuálny filter po reload-e --}}
-                        placeholder="Hľadaj produkty…"
+                        name="q"
+                        value="{{ request('q') }}"
+                        placeholder="Search in products…"
                         aria-label="Search"
                     >
                     <button class="btn p-0" type="submit">
@@ -29,7 +29,9 @@
                             <h5 class="text-center">
                                 {{ Auth::user()->first_name }} {{ Auth::user()->last_name}}
                             </h5>
-
+                            <div class="d-grid gap-2 my-2">
+                            <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary">Your orders</a>
+                            </div>
                             @if(Auth::user()->is_admin)
                                 <div class="d-grid gap-2 my-2">
                                     <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">Admin panel</a>

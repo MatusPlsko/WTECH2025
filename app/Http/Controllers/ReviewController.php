@@ -13,8 +13,6 @@ class ReviewController extends Controller
 {
     public function store(Request $request, $productId)
     {
-
-
         if (!Auth::check()) {
             return back()->withErrors(['login' => 'You must be logged in.']);
         }
@@ -24,6 +22,7 @@ class ReviewController extends Controller
             'comment' => 'required|string',
         ]);
 
+        // Vytvorenie novej recenzie
         Review::create([
             'product_id' => $productId,
             'user_id' => auth()->id(),
@@ -32,6 +31,15 @@ class ReviewController extends Controller
             'created_at' => now(),
         ]);
 
+
+        $product = \App\Models\Product::find($productId);
+        if ($product) {
+            $average = $product->reviews()->avg('rating');
+            $product->rating = $average;
+            $product->save();
+        }
+
         return back()->with('success', 'Review added!');
     }
+
 }

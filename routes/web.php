@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 
 use App\Http\Controllers\ReviewController;
@@ -11,6 +12,11 @@ use App\Http\Controllers\Auth\CustomLoginController;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
+});
 Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');

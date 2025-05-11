@@ -18,7 +18,8 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    // definícia 1:N vzťahu na obrázky
+
+
     public function images()
     {
         return $this->hasMany(ProductImage::class);
