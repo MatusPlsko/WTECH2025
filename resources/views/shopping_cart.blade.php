@@ -52,41 +52,41 @@
                         <div class="mb-4">
                             <h5 class="text-white mb-3">Contact Information</h5>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="First Name" required
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name" required
                                        value="{{ old('first_name', $user->first_name ?? '') }}">
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Last Name" required
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name" required
                                        value="{{ old('last_name', $user->last_name ?? '') }}">
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control" placeholder="Email" required
+                                <input type="email" class="form-control" name="email" placeholder="Email" required
                                        value="{{ old('email', $user->email ?? '') }}">
                             </div>
                             <div class="mb-3">
-                                <input type="tel" class="form-control" placeholder="Phone Number" required>
+                                <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required>
                             </div>
                         </div>
 
                         <div class="mb-4">
                             <h5 class="text-white mb-3">Shipping Address</h5>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Street Address" required
-                                       value="{{ old('address', $user->address ?? '') }}">
+                                <input type="text" class="form-control" name="shipping_address" placeholder="Street Address" required
+                                       value="{{ old('street_address', $user->address ?? '') }}">
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Apartment, suite, etc. (optional)">
+                                <input type="text" class="form-control" name="shipping_address2" placeholder="Apartment, suite, etc. (optional)">
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" placeholder="City" required>
+                                    <input type="text" class="form-control" name="city" placeholder="City" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" placeholder="Postal Code" required>
+                                    <input type="text" class="form-control" name="postal_code" placeholder="Postal Code" required>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <select class="form-select" required>
+                                <select class="form-select" name="country" required>
                                     <option value="" disabled selected>Select Country</option>
                                     <option value="SK">Slovakia</option>
                                     <option value="CZ">Czech Republic</option>
@@ -102,7 +102,7 @@
                             <h5 class="text-white mb-3">Payment Method</h5>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                                    <input class="form-check-input" type="radio" name="payment_method" id="creditCard" value="credit_card" checked>
                                     <label class="form-check-label text-white" for="creditCard">
                                         <i class="bi bi-credit-card me-2"></i>Credit/Debit Card
                                     </label>
@@ -110,7 +110,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
                                     <label class="form-check-label text-white" for="paypal">
                                         <i class="bi bi-paypal me-2"></i>PayPal
                                     </label>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="bankTransfer" value="bank_transfer">
                                     <label class="form-check-label text-white" for="bankTransfer">
                                         <i class="bi bi-bank me-2"></i>Bank Transfer
                                     </label>
@@ -126,7 +126,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="cashOnDelivery" value="cash_on_delivery">
                                     <label class="form-check-label text-white" for="cashOnDelivery">
                                         <i class="bi bi-cash me-2"></i>Cash on Delivery
                                     </label>
@@ -157,6 +157,7 @@
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

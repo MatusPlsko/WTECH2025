@@ -86,22 +86,36 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $user = Auth::user();
-        $total = 0;
         $cart = session('cart', []);
-
+        $total = 0;
 
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
 
+        $shipping = count($cart) === 0 ? 0 : 4.40;
+        $finalTotal = $total + $shipping;
 
+        // Validácia vstupov (voliteľné)
+
+
+        // Vytvorenie objednávky
         $order = Order::create([
             'user_id' => Auth::id(),
-            'total_price' => $total,
-            'status' => 'pending', // Alebo iný stav
-            'shipping_address' => json_encode($request->shipping_address), // Predpokladám, že máš pole 'shipping_address'
+            'total_price' => $finalTotal,
+            'status' => 'pending',
+            'payment_method' => $request->payment_method,
+            'shipping_address' => json_encode([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'postal_code' => $request->postal_code,
+                'country' => $request->country,
+            ]),
         ]);
-
 
         foreach ($cart as $item) {
             OrderItem::create([
@@ -112,10 +126,9 @@ class CartController extends Controller
             ]);
         }
 
-
         session()->forget('cart');
-
 
         return redirect()->route('ordersuccess', ['order' => $order->id]);
     }
+
 }

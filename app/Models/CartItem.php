@@ -8,23 +8,23 @@ class CartItem extends Model
 {
 
 
-    // Určte, ktoré stĺpce môžu byť hromadne priradené (mass assignable)
+
     protected $fillable = [
         'user_id',
         'product_id',
         'quantity',
     ];
 
-    // Relácia s produktom
+
     public function product()
     {
-        return $this->belongsTo(Product::class); // Každý CartItem patrí jednému produktu
+        return $this->belongsTo(Product::class);
     }
 
 
-    // Relácia s užívateľom
+
     public function user()
     {
-        return $this->belongsTo(User::class); // Každý CartItem patrí jednému používateľovi
+        return $this->belongsTo(User::class);
     }
 }
