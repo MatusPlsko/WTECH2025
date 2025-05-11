@@ -49,6 +49,7 @@
                         type="number"
                         name="min_price"
                         value="{{ $minPrice ?? '' }}"
+                        min="0"
                         step="0.01"
                         class="form-control form-control-sm"
                         placeholder="0.00"
@@ -62,10 +63,34 @@
                         type="number"
                         name="max_price"
                         value="{{ $maxPrice ?? '' }}"
+                        min="0"
                         step="0.01"
                         class="form-control form-control-sm"
                         placeholder="100.00"
                     >
+                </div>
+
+                <h3 class="mt-4">BRAND</h3>
+                @php
+                    $allBrands = ['TechNutrition','BeamNutrition','ProteinTech','BioTech','Wsupplements'];
+                    $selected = request('brands', []);
+                @endphp
+                <div class="mb-3 px-2">
+                    @foreach($allBrands as $brand)
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="brands[]"
+                                id="brand_{{ $brand }}"
+                                value="{{ $brand }}"
+                                {{ in_array($brand, $selected) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="brand_{{ $brand }}">
+                                {{ $brand }}
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm w-100">Apply Filters</button>
             </form>
@@ -182,8 +207,38 @@
                 @endif
             </div>
 
-            <div class="pagination-section">
-                {{ $products->links() }}
+            <div class="mt-4 d-flex justify-content-between align-items-center">
+                {{-- 1) text s rozsahom --}}
+                <div class="text-secondary">
+                    Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} results
+                </div>
+
+                {{-- 2) jednoduché šípky --}}
+                <nav aria-label="Product pagination">
+                    <ul class="pagination mb-0">
+                        {{-- Previous --}}
+                        <li class="page-item {{ $products->onFirstPage() ? 'disabled' : '' }}">
+                            <a
+                                class="page-link"
+                                href="{{ $products->previousPageUrl() }}"
+                                aria-label="Previous"
+                            >
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        {{-- Next --}}
+                        <li class="page-item {{ $products->hasMorePages() ? '' : 'disabled' }}">
+                            <a
+                                class="page-link"
+                                href="{{ $products->nextPageUrl() }}"
+                                aria-label="Next"
+                            >
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

@@ -160,10 +160,12 @@ class ProductController extends Controller
     {
         // validujeme min/max price
         $validated = $request->validate([
-            'min_price' => 'nullable|numeric|lte:max_price',
-            'max_price' => 'nullable|numeric|gte:min_price',
+            'min_price' => 'nullable|numeric|min:0|lte:max_price',
+            'max_price' => 'nullable|numeric|min:0|gte:min_price',
             'q'         => 'nullable|string',
             'category'  => 'nullable|exists:categories,id',
+            'brands'    => 'nullable|array',
+            'brands.*'  => 'in:TechNutrition,BeamNutrition,ProteinTech,BioTech,Wsupplements',
         ]);
 
         $query = Product::query();
@@ -183,6 +185,9 @@ class ProductController extends Controller
         if (! empty($validated['category'])) {
             $query->where('category_id', $validated['category']);
         }
+        if (!empty($validated['brands'])) {
+            $query->whereIn('brand', $validated['brands']);
+        }
         if ($sort = $request->input('sort')) {
             if ($sort === 'price_asc') {
                 $query->orderBy('price', 'asc');
@@ -193,7 +198,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->paginate(16)->withQueryString();
 
         return view('products', [
             'products'        => $products,
@@ -202,6 +207,8 @@ class ProductController extends Controller
             'minPrice'        => $min,
             'maxPrice'        => $max,
             'sort'            => $validated['sort'] ?? null,
+            'selectedBrands'  => $validated['brands'] ?? [],
+
         ]);
     }
     public function filter(Request $request, $categoryId)
