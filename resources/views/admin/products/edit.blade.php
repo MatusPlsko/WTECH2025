@@ -121,39 +121,32 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Brand</label>
-                                        <select
-                                            name="brand"
-                                            class="form-select @error('brand') is-invalid @enderror"
-                                            required
-                                        >
+                                        <select name="brand" class="form-select" required>
                                             <option value="">-- vyber brand --</option>
-                                            <option value="TechNutrition"    {{ old('brand')=='TechNutrition'    ? 'selected':'' }}>TechNutrition</option>
-                                            <option value="BeamNutrition"    {{ old('brand')=='BeamNutrition'    ? 'selected':'' }}>BeamNutrition</option>
-                                            <option value="ProteinTech"      {{ old('brand')=='ProteinTech'      ? 'selected':'' }}>ProteinTech</option>
-                                            <option value="BioTech"          {{ old('brand')=='BioTech'          ? 'selected':'' }}>BioTech</option>
-                                            <option value="Wsupplements"     {{ old('brand')=='Wsupplements'     ? 'selected':'' }}>Wsupplements</option>
+                                            @foreach(['TechNutrition','BeamNutrition','ProteinTech','BioTech','Wsupplements'] as $brand)
+                                                <option
+                                                    value="{{ $brand }}"
+                                                    {{ old('brand', $product->brand)==$brand ? 'selected' : '' }}
+                                                >
+                                                    {{ $brand }}
+                                                </option>
+                                            @endforeach
                                         </select>
-                                        @error('brand')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Category</label>
-                                        <select name="category_id"
-                                                class="form-select @error('category_id') is-invalid @enderror"
-                                                required>
+                                        <select name="category_id" class="form-select" required>
                                             <option value="">-- vyber kategóriu --</option>
                                             @foreach(\App\Models\Category::all() as $cat)
-                                                <option value="{{ $cat->id }}"
-                                                    {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                                <option
+                                                    value="{{ $cat->id }}"
+                                                    {{ old('category_id', $product->category_id)==$cat->id ? 'selected' : '' }}
+                                                >
                                                     {{ $cat->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('category_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
 
                                     <div class="row gx-3">
@@ -172,8 +165,8 @@
                                         <div class="mb-3">
                                             <label for="sale" class="form-label">On Sale?</label>
                                             <select name="sale" id="sale" class="form-select" required>
-                                                <option value="0" {{ old('sale') === '0' ? 'selected' : '' }}>No</option>
-                                                <option value="1" {{ old('sale') === '1' ? 'selected' : '' }}>Yes</option>
+                                                <option value="0" {{ old('sale', $product->sale) == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ old('sale', $product->sale) == 1 ? 'selected' : '' }}>Yes</option>
                                             </select>
                                         </div>
 

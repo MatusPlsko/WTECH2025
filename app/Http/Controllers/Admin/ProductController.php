@@ -18,7 +18,7 @@ class ProductController extends Controller
     // staré “index” presunieme do list()
     public function list()
     {
-        $products = Product::with('images')->paginate(12);
+        $products = Product::with('images')->paginate(16);
         return view('admin.products.index', compact('products'));
     }
 
@@ -150,10 +150,17 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete($image->path);
+        }
+
+        // 2) Odstrániť záznamy v databáze product_images (ak nemáte ON DELETE CASCADE)
+        $product->images()->delete();
+
         $product->delete();
         return redirect()
             ->route('admin.products.index')
-            ->with('success','Produkt bol odstránený.');
+            ->with('success','Produkt bol úspešne odstránený.');
     }
 
     public function index(Request $request)

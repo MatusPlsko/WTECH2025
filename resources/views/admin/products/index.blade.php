@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            {{-- Grid: 1 col xs, 2 col sm, 4 col md+ --}}
+            {{-- Grid: 1 col xs, 2 col sm, 4 col md  --}}
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
                 @foreach($products as $p)
                     <div class="col">
@@ -62,8 +62,12 @@
             </div>
 
             {{-- Pagination --}}
-            <div class="d-flex justify-content-center mt-4">
-                {{ $products->links() }}
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                {{-- prázdny div, aby šípky boli vpravo --}}
+                <div></div>
+                <div>
+                    {{ $products->links() }}
+                </div>
             </div>
         </div>
     </main>
