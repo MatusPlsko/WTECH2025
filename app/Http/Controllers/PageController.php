@@ -62,8 +62,28 @@ class PageController extends Controller
 
     public function shopping_cart()
     {
-        $cart = session()->get('cart', []);
-        $user = Auth::user(); // môže byť aj request()->user()
+        $user = Auth::user();
+
+        if ($user) {
+            $cartItems = \App\Models\CartItem::with('product.images')
+                ->where('user_id', $user->id)
+                ->get();
+
+            $cart = [];
+
+            foreach ($cartItems as $item) {
+                $product = $item->product;
+                $cart[$product->id] = [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'quantity' => $item->quantity,
+                    'image' => $product->images->first()?->path,
+                ];
+            }
+        } else {
+            $cart = session()->get('cart', []);
+        }
 
         return view('shopping_cart', compact('cart', 'user'));
     }

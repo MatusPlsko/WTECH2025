@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -42,23 +43,45 @@ class CartController extends Controller
     public function addToCart(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $cart = session()->get('cart', []);
         $quantity = $request->input('quantity', 1);
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']+= $quantity;
+
+        if (auth()->check()) {
+            // Používateľ je prihlásený, ukladáme do databázy
+            $cartItem = CartItem::where('user_id', auth()->id())
+                ->where('product_id', $product->id)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->quantity += $quantity;
+                $cartItem->save();
+            } else {
+                CartItem::create([
+                    'user_id' => auth()->id(),
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                ]);
+            }
+
         } else {
-            $cart[$id] = [
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->price,
-                'quantity' => $quantity,
-                'image' =>$product->images->first()?->path
-            ];
+            // Používateľ nie je prihlásený, ukladáme do session
+            $cart = session()->get('cart', []);
+            if (isset($cart[$id])) {
+                $cart[$id]['quantity'] += $quantity;
+            } else {
+                $cart[$id] = [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'quantity' => $quantity,
+                    'image' => $product->images->first()?->path
+                ];
+            }
+            session()->put('cart', $cart);
         }
 
-        session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart!');
     }
+
 
     public function checkout(Request $request)
     {

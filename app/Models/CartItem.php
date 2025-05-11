@@ -21,6 +21,7 @@ class CartItem extends Model
         return $this->belongsTo(Product::class); // Každý CartItem patrí jednému produktu
     }
 
+
     // Relácia s užívateľom
     public function user()
     {
