@@ -12,30 +12,40 @@ class CartController extends Controller
 {
     public function update(Request $request, $id)
     {
-        $cart = session()->get('cart', []);
+        $quantity = max(1, (int)$request->input('quantity'));
 
-        if (isset($cart[$id])) {
-            if ($request->input('action') === 'increase') {
-                $cart[$id]['quantity']++;
-            } elseif ($request->input('action') === 'decrease') {
-                $cart[$id]['quantity'] = max(1, $cart[$id]['quantity'] - 1);
-            } else {
-                $cart[$id]['quantity'] = max(1, (int)$request->input('quantity'));
+        if (auth()->check()) {
+            $cartItem = CartItem::where('user_id', auth()->id())
+                ->where('product_id', $id)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->quantity = $quantity;
+                $cartItem->save();
             }
-
-            session()->put('cart', $cart);
+        } else {
+            $cart = session()->get('cart', []);
+            if (isset($cart[$id])) {
+                $cart[$id]['quantity'] = $quantity;
+                session()->put('cart', $cart);
+            }
         }
 
-        return redirect()->route('cart');
+        return redirect()->route('cart')->with('success', 'Cart updated');
     }
 
     public function remove($id)
     {
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
+        if (auth()->check()) {
+            CartItem::where('user_id', auth()->id())
+                ->where('product_id', $id)
+                ->delete();
+        } else {
+            $cart = session()->get('cart', []);
+            if (isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            }
         }
 
         return redirect()->route('cart');
@@ -86,9 +96,27 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $user = Auth::user();
-        $cart = session('cart', []);
-        $total = 0;
 
+        // Získaj položky z databázy ak je používateľ prihlásený, inak zo session
+        if ($user) {
+            $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
+
+            $cart = [];
+            foreach ($cartItems as $item) {
+                $cart[] = [
+                    'id' => $item->product_id,
+                    'name' => $item->product->name,
+                    'price' => $item->product->price,
+                    'quantity' => $item->quantity,
+                    'image' => $item->product->images->first()?->path,
+                ];
+            }
+        } else {
+            $cart = session('cart', []);
+        }
+
+        // Výpočet ceny
+        $total = 0;
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
@@ -96,15 +124,12 @@ class CartController extends Controller
         $shipping = count($cart) === 0 ? 0 : 4.40;
         $finalTotal = $total + $shipping;
 
-        // Validácia vstupov (voliteľné)
 
-
-        // Vytvorenie objednávky
         $order = Order::create([
-            'user_id' => Auth::id(),
+            'user_id' => $user?->id,
             'total_price' => $finalTotal,
             'status' => 'pending',
-            'payment_method' => $request->payment_method,
+            'payment_method' => $request->payment_method ?? 'unknown',
             'shipping_address' => json_encode([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -126,9 +151,15 @@ class CartController extends Controller
             ]);
         }
 
-        session()->forget('cart');
+        // Vymazanie košíka
+        if ($user) {
+            CartItem::where('user_id', $user->id)->delete();
+        } else {
+            session()->forget('cart');
+        }
 
         return redirect()->route('ordersuccess', ['order' => $order->id]);
     }
+
 
 }

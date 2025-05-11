@@ -12,8 +12,8 @@
 
                     <div class="row d-flex align-items-stretch">
                         <div class="col-md-6 col-lg-6 mb-4 d-flex align-items-center">
-                            <!-- Left Image Section -->
-                            <img src="../images/registration.jpg" class="img-fluid h-100 w-100 object-fit-cover rounded" alt="Registration Image">
+
+
                         </div>
 
                     </div>

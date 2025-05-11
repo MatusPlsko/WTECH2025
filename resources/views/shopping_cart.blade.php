@@ -23,11 +23,10 @@
                                 <h3 class="cart-item-title h5 mb-2">{{ $item['name'] }}</h3>
                                 <div class="cart-item-price mb-2">{{ number_format($item['price'], 2) }} €</div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <form method="POST" action="{{ route('cart.update', $id) }}">
+                                    <form method="POST" action="{{ route('cart.update', $id) }}" class="d-flex align-items-center gap-2">
                                         @csrf
-                                        <button class="quantity-btn" name="action" value="decrease">-</button>
-                                        <input type="number" name="quantity" class="form-control w-25 text-center" value="{{ $item['quantity'] }}" min="1">
-                                        <button class="quantity-btn" name="action" value="increase">+</button>
+                                        <input type="number" name="quantity" class="form-control text-center" value="{{ $item['quantity'] }}" min="1" style="width: 80px;">
+                                        <button class="btn btn-primary" type="submit">Update cart</button>
                                     </form>
                                 </div>
                             </div>
@@ -39,6 +38,7 @@
                             </form>
                         </div>
                     @endforeach
+
                 </div>
             </div>
 
