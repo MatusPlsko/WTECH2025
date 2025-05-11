@@ -25,7 +25,8 @@
                                 <div class="d-flex align-items-center gap-2">
                                     <form method="POST" action="{{ route('cart.update', $id) }}" class="d-flex align-items-center gap-2">
                                         @csrf
-                                        <input type="number" name="quantity" class="form-control text-center" value="{{ $item['quantity'] }}" min="1" style="width: 80px;">
+                                        <input type="number" name="quantity" class="form-control text-center" value="{{ $item['quantity'] }}" min="1"
+                                               style="width: 80px;">
                                         <button class="btn btn-primary" type="submit">Update cart</button>
                                     </form>
                                 </div>
@@ -94,6 +95,14 @@
                                     <option value="PL">Poland</option>
                                     <option value="AT">Austria</option>
                                     <option value="DE">Germany</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" name="order" required>
+                                    <option value="" disabled selected>Select Delivery</option>
+                                    <option value="Courier">Courier</option>
+                                    <option value="Box">Delivery box</option>
+                                    <option value="Odber">Osobný odber</option>
                                 </select>
                             </div>
                         </div>

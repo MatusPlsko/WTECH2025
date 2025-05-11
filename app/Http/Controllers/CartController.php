@@ -13,7 +13,14 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $quantity = max(1, (int)$request->input('quantity'));
+        $product = Product::find($id);
+        if (!$product) {
+            return redirect()->route('cart')->with('error', 'Product not found');
+        }
 
+        if ($quantity > $product->stock_quantity) {
+            return redirect()->route('cart')->with('error', 'Not enough stock available');
+        }
         if (auth()->check()) {
             $cartItem = CartItem::where('user_id', auth()->id())
                 ->where('product_id', $id)
@@ -121,6 +128,7 @@ class CartController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
+
         $shipping = count($cart) === 0 ? 0 : 4.40;
         $finalTotal = $total + $shipping;
 
@@ -149,6 +157,14 @@ class CartController extends Controller
                 'quantity' => $item['quantity'],
                 'price_of_items' => $item['price'],
             ]);
+        }
+
+        foreach ($cart as $item) {
+            $product = Product::find($item['id']);
+            if ($product) {
+                $product->stock_quantity = max(0, $product->stock_quantity - $item['quantity']);
+                $product->save();
+            }
         }
 
         // Vymazanie košíka

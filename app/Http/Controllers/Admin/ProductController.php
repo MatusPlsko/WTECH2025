@@ -203,6 +203,9 @@ class ProductController extends Controller
             } elseif ($sort === 'newest') {
                 $query->orderBy('created_at', 'desc');
             }
+            elseif ($sort === 'rating') {
+                $query->orderBy('rating');
+            }
         }
 
         $products = $query->paginate(16)->withQueryString();

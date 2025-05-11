@@ -70,6 +70,7 @@
             <h2>NEW PRODUCTS</h2>
             <div class="product-grid">
                 @foreach($products as $p)
+                    @if($p->stock_quantity > 0)
                     <div class="card">
                         {{-- Image --}}
                         @if($p->images->first())
@@ -94,6 +95,7 @@
                             </form>
                         </div>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>

@@ -32,6 +32,9 @@
                             @if ($errors->has('login'))
                                 <div class="alert alert-danger">{{ $errors->first('login') }}</div>
                             @endif
+                            @if($product ->stock_quantity == 0)
+                                <div class="alert alert-danger"><p>Product is not currently on stock</p></div>
+                                @endif
                         </div>
                         <h1>{{$product->name}}</h1>
                         <h4>{{$product->brand}}</h4>
@@ -140,12 +143,13 @@
 
 
 
-        <!-- Similar Products -->
+
         <!-- Similar Products -->
         <div class="similar-products mt-5">
             <h2 class="text-center mb-4">Similar Products</h2>
             <div class="product-grid">
                 @foreach($similarProducts as $similarProduct)
+                    @if($similarProduct->stock_quantity > 0)
                     <div class="card">
                         <a href="{{ route('showProduct', $similarProduct->id) }}">
                             <img src="{{ asset('storage/' . $similarProduct->images->first()->path) }}" alt="{{ $similarProduct->name }}">
@@ -159,6 +163,7 @@
                             </div>
                         </form>
                     </div>
+                    @endif
                 @endforeach
             </div>
 

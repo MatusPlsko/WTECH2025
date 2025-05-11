@@ -170,6 +170,13 @@
                                     href="{{ request()->fullUrlWithQuery(['sort' => 'newest']) }}"
                                 >Newest First</a>
                             </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ request()->fullUrlWithQuery(['sort' => 'rating']) }}"
+                                >Best rating</a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -178,6 +185,7 @@
             <div class="product-grid">
                 @if($products->count())
                     @foreach($products as $p)
+                        @if($p->stock_quantity > 0)
                         <div class="card">
                             @if($p->images->first())
                                 <a href="{{ route('showProduct', $p->id) }}">
@@ -201,6 +209,7 @@
                                 <button type="submit" class="btn btn-primary">Add to Cart</button>
                             </form>
                         </div>
+                        @endif
                     @endforeach
                 @else
                     <p class="text-center">No products</p>
