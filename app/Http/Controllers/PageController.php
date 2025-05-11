@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -27,15 +28,27 @@ class PageController extends Controller
     }
     public function showProduct(Product $product)
     {
-        $product->load(['images', 'reviews.user']);
+        $product->load(['images', 'reviews.user', 'category']);
 
-        return view('oneproduct', compact('product'));
+
+        $similarProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->take(4)
+            ->get();
+
+        return view('oneproduct', compact('product', 'similarProducts'));
     }
 
     public function products()
     {
         $products = Product::with('images')->paginate(12);
         return view('products', compact('products'));
+    }
+
+    public function ordersuccess($order)
+    {
+        $order = Order::findOrFail($order);
+        return view('ordersuccess', compact('order'));
     }
     public function register()
     {

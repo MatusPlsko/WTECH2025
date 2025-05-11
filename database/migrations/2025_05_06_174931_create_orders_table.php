@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total_price', 8, 2);
             $table->text('status');
             $table->text('shipping_address');
-            $table->timestamp('created_at')->useCurrent();
+
         });
     }
 

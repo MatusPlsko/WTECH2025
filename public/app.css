@@ -160,6 +160,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 1rem;
+    
 
 }
 
@@ -545,10 +546,10 @@ main.container {
 /* Product Tabs */
 .product-tabs {
     margin-bottom: 3rem;
-}
+    width: 100%;}
 
 #productTabsContent {
-    min-width: 70rem;
+    width: 100%;
     overflow-y: auto;
 }
 

@@ -22,7 +22,10 @@
                                 <h5 class="text-start">{{ $product->name }}</h5>
                                 <p class="text-muted">{{ $product->description }}</p>
                                 <p class="fw-bold">Price: <span class="text-danger">{{ number_format($product->price, 2) }}€</span></p>
-                                <a href="{{ route('cart.add', $product->id) }}" class="btn btn-primary">Add to Cart</a>
+                                <form method="POST" action="{{ route('cart.add', $product->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                </form>
                             </div>
                         </div>
                     </div>

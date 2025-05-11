@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamps(); // pridá 'created_at' a 'updated_at'
+            $table->timestamps();
         });
     }
 

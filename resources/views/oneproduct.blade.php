@@ -34,6 +34,7 @@
                             @endif
                         </div>
                         <h1>{{$product->name}}</h1>
+                        <h4>{{$product->brand}}</h4>
                         <div class="price">{{$product->price,2}} €</div>
                         <div class="rating mb-3">
                             @php
@@ -75,9 +76,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="ingredients-tab" data-bs-toggle="tab" data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</button>
-                </li>
+
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
                 </li>
@@ -86,10 +85,6 @@
                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                     <h3>Product Description</h3>
                     {{$product->description}}
-                </div>
-                <div class="tab-pane fade" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
-                    <h3>Ingredients</h3>
-                    <p>Whey Protein Concentrate, Natural Flavors, Lecithin, Acesulfame Potassium, Sucralose.</p>
                 </div>
                 <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                     <h3>Customer Reviews</h3>
@@ -146,42 +141,30 @@
 
 
         <!-- Similar Products -->
+        <!-- Similar Products -->
         <div class="similar-products mt-5">
             <h2 class="text-center mb-4">Similar Products</h2>
             <div class="product-grid">
-                <div class="card">
-                    <img src="../images/products/product_bcaa.jpg" alt="Similar Product 1">
-                    <div class="card-body">
-                        <h5 class="card-title">BCAA Complex</h5>
-                        <p class="card-text">29.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
+                @foreach($similarProducts as $similarProduct)
+                    <div class="card">
+                        <a href="{{ route('showProduct', $similarProduct->id) }}">
+                            <img src="{{ asset('storage/' . $similarProduct->images->first()->path) }}" alt="{{ $similarProduct->name }}">
+                        </a>
+                        <form method="POST" action="{{ route('cart.add', $similarProduct->id) }}">
+                            @csrf
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $similarProduct->name }}</h5>
+                                <p class="card-text">{{ number_format($similarProduct->price, 2) }} €</p>
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_massgainer.jpg" alt="Similar Product 1"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Mass gainer</h5>
-                        <p class="card-text">49.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_creatin.jpg" alt="Similar Product 2"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Creatine Monohydrate</h5>
-                        <p class="card-text">24.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <a href="oneproduct.html"><img src="../images/products/product_preworkout.jpg" alt="Similar Product 3"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">Pre-Workout</h5>
-                        <p class="card-text">34.99 €</p>
-                        <a href="shopping_cart.html" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
+
+            @if($similarProducts->isEmpty())
+                <p>No similar products available.</p>
+            @endif
         </div>
-    </main>
+
 @endsection
